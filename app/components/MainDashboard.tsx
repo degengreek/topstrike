@@ -15,6 +15,8 @@ import Header from './Header'
 import SquadBuilderTab from './SquadBuilderTab'
 import PortfolioSummaryTab from './PortfolioSummaryTab'
 import FixturesTab from './FixturesTab'
+import WalletLinkModal from './WalletLinkModal'
+import ViewWalletModal from './ViewWalletModal'
 
 interface Player {
   id: string
@@ -35,42 +37,54 @@ function getPlaceholderImage(name: string): string {
 export default function MainDashboard() {
   const { data: session } = useSession()
   const [activeTab, setActiveTab] = useState<'squad' | 'portfolio' | 'fixtures'>('squad')
-  const [walletAddress, setWalletAddress] = useState('')
-  const [searchInput, setSearchInput] = useState('')
+
+  // User's linked wallet (permanent)
+  const [linkedWallet, setLinkedWallet] = useState('')
   const [players, setPlayers] = useState<Player[]>([])
-  const [loading, setLoading] = useState(false)
-  const [showWalletLink, setShowWalletLink] = useState(false)
-  const [formation, setFormation] = useState<FormationType>('4-3-3')
-  const [assignedPlayers, setAssignedPlayers] = useState<Map<string, Player>>(new Map())
   const [walletBalance, setWalletBalance] = useState<string>('0')
   const [portfolioValue, setPortfolioValue] = useState<string>('0')
+
+  // Searched wallet (temporary, for viewing others)
+  const [searchedWallet, setSearchedWallet] = useState('')
+  const [searchedPlayers, setSearchedPlayers] = useState<Player[]>([])
+  const [searchedBalance, setSearchedBalance] = useState<string>('0')
+  const [searchedPortfolioValue, setSearchedPortfolioValue] = useState<string>('0')
+
+  // UI state
+  const [searchInput, setSearchInput] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [showLinkWalletModal, setShowLinkWalletModal] = useState(false)
+  const [showViewWalletModal, setShowViewWalletModal] = useState(false)
+  const [formation, setFormation] = useState<FormationType>('4-3-3')
+  const [assignedPlayers, setAssignedPlayers] = useState<Map<string, Player>>(new Map())
 
   // Check for linked wallet on session change or mount
   useEffect(() => {
     // Check localStorage for saved wallet (even without Twitter login)
     const savedWallet = localStorage.getItem('topstrike_wallet')
     if (savedWallet) {
-      setWalletAddress(savedWallet)
-      handleSearch(savedWallet)
+      setLinkedWallet(savedWallet)
+      fetchPortfolio(savedWallet, true)
       return
     }
 
     // Check Twitter-linked wallet
     if (session?.user?.id) {
-      const linkedWallet = getWalletLink(session.user.id)
-      if (linkedWallet) {
-        setWalletAddress(linkedWallet)
-        handleSearch(linkedWallet)
+      const userLinkedWallet = getWalletLink(session.user.id)
+      if (userLinkedWallet) {
+        setLinkedWallet(userLinkedWallet)
+        fetchPortfolio(userLinkedWallet, true)
       } else {
-        setShowWalletLink(true)
+        // User signed in but no wallet linked - show link modal
+        setShowLinkWalletModal(true)
       }
     }
   }, [session])
 
   // Load saved squad when wallet changes
   useEffect(() => {
-    if (walletAddress && players.length > 0) {
-      const saved = loadSquad(walletAddress)
+    if (linkedWallet && players.length > 0) {
+      const saved = loadSquad(linkedWallet)
       if (saved) {
         setFormation(saved.formation as FormationType)
         const newAssigned = new Map<string, Player>()
@@ -83,20 +97,19 @@ export default function MainDashboard() {
         setAssignedPlayers(newAssigned)
       }
     }
-  }, [walletAddress, players])
+  }, [linkedWallet, players])
 
   // Auto-save squad on changes
   useEffect(() => {
-    if (walletAddress && assignedPlayers.size > 0) {
-      saveSquad(walletAddress, formation, assignedPlayers)
+    if (linkedWallet && assignedPlayers.size > 0) {
+      saveSquad(linkedWallet, formation, assignedPlayers)
     }
-  }, [walletAddress, formation, assignedPlayers])
+  }, [linkedWallet, formation, assignedPlayers])
 
-  const handleSearch = async (address: string) => {
+  const fetchPortfolio = async (address: string, isLinkedWallet: boolean) => {
     if (!address || !address.trim()) return
 
     setLoading(true)
-    setShowWalletLink(false)
     try {
       const portfolio: PlayerData[] = await fetchUserPortfolio(address)
 
@@ -183,9 +196,6 @@ export default function MainDashboard() {
         })
       )
 
-      setPlayers(enrichedPlayers)
-      setWalletAddress(address)
-
       // Calculate portfolio value (total value of all player shares)
       let totalValueInWei = BigInt(0)
       for (const player of enrichedPlayers) {
@@ -196,31 +206,54 @@ export default function MainDashboard() {
         }
       }
       const portfolioValueInEth = ethers.formatEther(totalValueInWei)
-      setPortfolioValue(portfolioValueInEth)
 
       // Fetch wallet balance
+      let balanceInEth = '0'
       try {
         const provider = getProvider()
         const balance = await provider.getBalance(address)
-        const balanceInEth = ethers.formatEther(balance)
-        setWalletBalance(balanceInEth)
+        balanceInEth = ethers.formatEther(balance)
       } catch (err) {
         console.error('Failed to fetch wallet balance:', err)
-        setWalletBalance('0')
       }
 
-      // Save to localStorage (persists even without Twitter login)
-      localStorage.setItem('topstrike_wallet', address)
+      if (isLinkedWallet) {
+        // This is the user's linked wallet
+        setPlayers(enrichedPlayers)
+        setPortfolioValue(portfolioValueInEth)
+        setWalletBalance(balanceInEth)
 
-      // Also link wallet to Twitter if signed in
-      if (session?.user?.id) {
-        saveWalletLink(session.user.id, session.user.name || '', address)
+        // Save to localStorage (persists even without Twitter login)
+        localStorage.setItem('topstrike_wallet', address)
+
+        // Also link wallet to Twitter if signed in
+        if (session?.user?.id) {
+          saveWalletLink(session.user.id, session.user.name || '', address)
+        }
+      } else {
+        // This is a searched wallet (for viewing only)
+        setSearchedWallet(address)
+        setSearchedPlayers(enrichedPlayers)
+        setSearchedPortfolioValue(portfolioValueInEth)
+        setSearchedBalance(balanceInEth)
+        setShowViewWalletModal(true)
       }
     } catch (error) {
       console.error('Failed to fetch portfolio:', error)
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleLinkWallet = (walletAddress: string) => {
+    setLinkedWallet(walletAddress)
+    setShowLinkWalletModal(false)
+    fetchPortfolio(walletAddress, true)
+  }
+
+  const handleSearchWallet = () => {
+    if (!searchInput || !searchInput.trim()) return
+    fetchPortfolio(searchInput.trim(), false)
   }
 
   const handleAssignPlayer = (positionId: string, player: Player) => {
@@ -263,10 +296,10 @@ export default function MainDashboard() {
       <Header
         activeTab={activeTab}
         onTabChange={setActiveTab}
-        onSearch={handleSearch}
+        onSearch={handleSearchWallet}
         searchValue={searchInput}
         onSearchChange={setSearchInput}
-        walletAddress={walletAddress}
+        walletAddress={linkedWallet}
         walletBalance={walletBalance}
       />
 
@@ -285,13 +318,13 @@ export default function MainDashboard() {
               <div className="text-6xl mb-4">⚽</div>
               <h2 className="text-2xl font-bold text-white mb-2">Welcome to TopStrike Manager</h2>
               <p className="text-gray-400 mb-6">
-                Enter your TopStrike wallet address in the search bar above to get started
+                {session?.user ? 'Link your wallet to get started!' : 'Sign in with Twitter and link your wallet to get started!'}
               </p>
               <div className="bg-green-500/20 border border-green-500/30 rounded-lg p-4">
                 <p className="text-sm text-green-300 mb-3">
-                  💡 Your wallet will be saved automatically for next time!
+                  💡 Use the search bar to view other wallets' portfolios!
                 </p>
-                {showWalletLink && session?.user && (
+                {session?.user && (
                   <p className="text-xs text-gray-400">
                     Signed in as @{session.user.name}
                   </p>
@@ -316,7 +349,7 @@ export default function MainDashboard() {
             {activeTab === 'portfolio' && (
               <PortfolioSummaryTab
                 players={players}
-                walletAddress={walletAddress}
+                walletAddress={linkedWallet}
                 walletBalance={walletBalance}
                 portfolioValue={portfolioValue}
               />
@@ -328,6 +361,24 @@ export default function MainDashboard() {
           </>
         )}
       </main>
+
+      {/* Modals */}
+      {showLinkWalletModal && (
+        <WalletLinkModal
+          onLink={handleLinkWallet}
+          onClose={() => setShowLinkWalletModal(false)}
+        />
+      )}
+
+      {showViewWalletModal && (
+        <ViewWalletModal
+          walletAddress={searchedWallet}
+          players={searchedPlayers}
+          portfolioValue={searchedPortfolioValue}
+          walletBalance={searchedBalance}
+          onClose={() => setShowViewWalletModal(false)}
+        />
+      )}
     </div>
   )
 }
