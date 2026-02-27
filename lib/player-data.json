@@ -1,0 +1,155 @@
+{
+  "comment": "Manually verified player data - takes priority over TheSportsDB",
+  "players": {
+    "Mohamed Amoura": {
+      "position": "Centre-Forward",
+      "team": "Wolfsburg",
+      "verified": true,
+      "notes": "TheSportsDB shows retired player"
+    },
+    "Micky van de Ven": {
+      "position": "Centre-Back",
+      "team": "Tottenham Hotspur",
+      "verified": true,
+      "notes": "Not found in TheSportsDB"
+    },
+    "Nico O'Reilly": {
+      "position": "Midfielder",
+      "team": "Manchester City",
+      "verified": true,
+      "notes": "Apostrophe in name breaks TheSportsDB search"
+    },
+    "Kevin De Bruyne": {
+      "position": "Attacking Midfield",
+      "team": "Manchester City",
+      "verified": true,
+      "notes": "Not found in TheSportsDB"
+    },
+    "Wesley": {
+      "position": "Defender",
+      "team": "Roma",
+      "verified": true,
+      "notes": "Common name, TheSportsDB confusion"
+    },
+    "Valentín Castellanos": {
+      "position": "Centre-Forward",
+      "team": "Lazio",
+      "verified": true,
+      "notes": "Special character in name"
+    },
+    "Emile Smith Rowe": {
+      "position": "Attacking Midfield",
+      "team": "Fulham",
+      "verified": true,
+      "notes": "Not found in TheSportsDB"
+    },
+    "Ao Tanaka": {
+      "position": "Central Midfield",
+      "team": "Leeds United",
+      "verified": true,
+      "notes": "Not found in TheSportsDB"
+    },
+    "Thomas Soucek": {
+      "position": "Defensive Midfield",
+      "team": "West Ham United",
+      "verified": true,
+      "notes": "Not found in TheSportsDB"
+    },
+    "Maxim De Cuyper": {
+      "position": "Left-Back",
+      "team": "Club Brugge",
+      "verified": true,
+      "notes": "Not found in TheSportsDB"
+    },
+    "Ismalia Sarr": {
+      "position": "Right Winger",
+      "team": "Crystal Palace",
+      "verified": true,
+      "notes": "Name spelling variation"
+    },
+    "Rio Ngumoha": {
+      "position": "Left Winger",
+      "team": "Chelsea",
+      "verified": true,
+      "notes": "Young player, not in TheSportsDB"
+    },
+    "Jeff Chabot": {
+      "position": "Centre-Back",
+      "team": "Stuttgart",
+      "verified": true,
+      "notes": "Not found in TheSportsDB"
+    },
+    "Charles De Ketelaere": {
+      "position": "Attacking Midfield",
+      "team": "Atalanta",
+      "verified": true,
+      "notes": "Name spelling variation"
+    },
+    "Nicolo Paz": {
+      "position": "Attacking Midfield",
+      "team": "Como",
+      "verified": true,
+      "notes": "Young player, not in TheSportsDB"
+    },
+    "Francesco Pio Esposito": {
+      "position": "Centre-Forward",
+      "team": "Spezia",
+      "verified": true,
+      "notes": "Not found in TheSportsDB"
+    },
+    "Alejandro Grimaldo": {
+      "position": "Left-Back",
+      "team": "Bayer Leverkusen",
+      "verified": true,
+      "notes": "Not found in TheSportsDB"
+    },
+    "PLAYER 1 - DO NOT BUY": {
+      "position": "Unknown",
+      "team": "Test/Placeholder",
+      "verified": true,
+      "notes": "Placeholder player"
+    },
+    "PLAYER 2 - DO NOT BUY": {
+      "position": "Unknown",
+      "team": "Test/Placeholder",
+      "verified": true,
+      "notes": "Placeholder player"
+    },
+    "PLAYER 3 - DO NOT BUY": {
+      "position": "Unknown",
+      "team": "Test/Placeholder",
+      "verified": true,
+      "notes": "Placeholder player"
+    },
+    "PLAYER 4 - DO NOT BUY": {
+      "position": "Unknown",
+      "team": "Test/Placeholder",
+      "verified": true,
+      "notes": "Placeholder player"
+    },
+    "PLAYER 5 - DO NOT BUY": {
+      "position": "Unknown",
+      "team": "Test/Placeholder",
+      "verified": true,
+      "notes": "Placeholder player"
+    },
+    "PLAYER 7 - DO NOT BUY": {
+      "position": "Unknown",
+      "team": "Test/Placeholder",
+      "verified": true,
+      "notes": "Placeholder player"
+    },
+    "PLAYER 8 - DO NOT BUY": {
+      "position": "Unknown",
+      "team": "Test/Placeholder",
+      "verified": true,
+      "notes": "Placeholder player"
+    },
+    "PLAYER 9 - DO NOT BUY": {
+      "position": "Unknown",
+      "team": "Test/Placeholder",
+      "verified": true,
+      "notes": "Placeholder player"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "topstrike-squad-viewer",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "build-db": "tsx scripts/build-player-database.ts",
+    "build-db-upgraded": "tsx scripts/build-player-database-upgraded.ts",
+    "build-db-quick": "tsx scripts/build-player-database-upgraded.ts",
+    "show-missing": "tsx scripts/show-missing-players.ts"
+  },
+  "dependencies": {
+    "ethers": "^6.16.0",
+    "lucide-react": "^0.453.0",
+    "next": "^15.0.0",
+    "next-auth": "^4.24.13",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5"
+  }
+}

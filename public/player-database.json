@@ -1,0 +1,1318 @@
+[
+  {
+    "id": 1,
+    "name": "PLAYER 1 - DO NOT BUY",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:43:20.811Z",
+    "attempts": 1
+  },
+  {
+    "id": 2,
+    "name": "PLAYER 2 - DO NOT BUY",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:43:37.233Z",
+    "attempts": 1
+  },
+  {
+    "id": 3,
+    "name": "PLAYER 3 - DO NOT BUY",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:43:53.553Z",
+    "attempts": 1
+  },
+  {
+    "id": 4,
+    "name": "PLAYER 4 - DO NOT BUY",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:44:10.152Z",
+    "attempts": 1
+  },
+  {
+    "id": 5,
+    "name": "PLAYER 5 - DO NOT BUY",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:44:26.460Z",
+    "attempts": 1
+  },
+  {
+    "id": 6,
+    "name": "PLAYER 5 - DO NOT BUY",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:44:42.768Z",
+    "attempts": 1
+  },
+  {
+    "id": 7,
+    "name": "PLAYER 7 - DO NOT BUY",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:44:59.179Z",
+    "attempts": 1
+  },
+  {
+    "id": 8,
+    "name": "PLAYER 8 - DO NOT BUY",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:45:15.575Z",
+    "attempts": 1
+  },
+  {
+    "id": 9,
+    "name": "PLAYER 9 - DO NOT BUY",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:45:31.914Z",
+    "attempts": 1
+  },
+  {
+    "id": 10,
+    "name": "Conor Gallagher",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/pj90do1768679014.png",
+    "position": "Central Midfield",
+    "team": "Tottenham Hotspur",
+    "sportsDbId": "34172789"
+  },
+  {
+    "id": 11,
+    "name": "Brennan Johnson",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/wvlu2i1768679620.png",
+    "position": "Right Winger",
+    "team": "Crystal Palace",
+    "sportsDbId": "34177246"
+  },
+  {
+    "id": 12,
+    "name": "Bryan Mbeumo",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/op28s81755176679.png",
+    "position": "Right Winger",
+    "team": "Manchester United",
+    "sportsDbId": "34173594"
+  },
+  {
+    "id": 13,
+    "name": "Valentín Castellanos",
+    "imageUrl": null,
+    "position": "Forward",
+    "team": "_Retired-Soccer",
+    "sportsDbId": "34285072",
+    "lastAttempt": "2026-02-27T17:45:49.131Z",
+    "attempts": 1
+  },
+  {
+    "id": 14,
+    "name": "Reece James",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/d8ifhl1766332522.png",
+    "position": "Defender",
+    "team": "Rotherham United",
+    "sportsDbId": "34145645"
+  },
+  {
+    "id": 15,
+    "name": "Cole Palmer",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/fn0pzc1757010119.png",
+    "position": "Attacking Midfield",
+    "team": "Chelsea",
+    "sportsDbId": "34192430"
+  },
+  {
+    "id": 16,
+    "name": "Wesley Fofana",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/thumb/ywk9gs1603656552.jpg",
+    "position": "Left Centre",
+    "team": "ASM Clermont Auvergne",
+    "sportsDbId": "34160856"
+  },
+  {
+    "id": 17,
+    "name": "Tyrick Mitchell",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/ltejjx1761492421.png",
+    "position": "Left-Back",
+    "team": "Crystal Palace",
+    "sportsDbId": "34172687"
+  },
+  {
+    "id": 18,
+    "name": "Amadou Onana",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/q2bvps1725359471.png",
+    "position": "Defensive Midfield",
+    "team": "Aston Villa",
+    "sportsDbId": "34174589"
+  },
+  {
+    "id": 19,
+    "name": "Dominic Calvert-Lewin",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/8gyavf1757076856.png",
+    "position": "Centre-Forward",
+    "team": "Leeds United",
+    "sportsDbId": "34159023"
+  },
+  {
+    "id": 20,
+    "name": "Emile Smith Rowe",
+    "imageUrl": null,
+    "position": "Attacking Midfield",
+    "team": "_Retired-Soccer",
+    "sportsDbId": "34275185",
+    "lastAttempt": "2026-02-27T17:46:07.238Z",
+    "attempts": 1
+  },
+  {
+    "id": 21,
+    "name": "Rodrigo Muniz",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/wswdye1757071073.png",
+    "position": "Centre-Forward",
+    "team": "Fulham",
+    "sportsDbId": "34193349"
+  },
+  {
+    "id": 22,
+    "name": "Georginio Rutter",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/owp31w1756998606.png",
+    "position": "Centre-Forward",
+    "team": "Brighton and Hove Albion",
+    "sportsDbId": "34175409"
+  },
+  {
+    "id": 23,
+    "name": "Ethan Ampadu",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/uelvti1757076111.png",
+    "position": "Defensive Midfield",
+    "team": "Leeds",
+    "sportsDbId": "34169292"
+  },
+  {
+    "id": 24,
+    "name": "Mo Salah",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/3blc581757088735.png",
+    "position": "Right Winger",
+    "team": "Liverpool",
+    "sportsDbId": "34145506"
+  },
+  {
+    "id": 25,
+    "name": "Cody Gakpo",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/lwkl5n1757088091.png",
+    "position": "Left Wing",
+    "team": "Liverpool",
+    "sportsDbId": "34164182"
+  },
+  {
+    "id": 26,
+    "name": "Sandro Tonali",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/b9oang1766824727.png",
+    "position": "Defensive Midfield",
+    "team": "Newcastle United",
+    "sportsDbId": "34168180"
+  },
+  {
+    "id": 27,
+    "name": "Bruno Guimaraes",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/qr8gk01766824971.png",
+    "position": "Defensive Midfield",
+    "team": "Newcastle United",
+    "sportsDbId": "34172187"
+  },
+  {
+    "id": 28,
+    "name": "Xavi Simons",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/uc5tjn1757016055.png",
+    "position": "Attacking Midfield",
+    "team": "Tottenham Hotspur",
+    "sportsDbId": "34178997"
+  },
+  {
+    "id": 29,
+    "name": "Marc Cucurella",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/j7i66q1757002736.png",
+    "position": "Left-Back",
+    "team": "Chelsea",
+    "sportsDbId": "34170224"
+  },
+  {
+    "id": 30,
+    "name": "Lewis Hall",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/lrlipr1766825780.png",
+    "position": "Left-Back",
+    "team": "Newcastle United",
+    "sportsDbId": "34195848"
+  },
+  {
+    "id": 31,
+    "name": "Yankuba Minteh",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/1345u71756998901.png",
+    "position": "Right Winger",
+    "team": "Brighton and Hove Albion",
+    "sportsDbId": "34219492"
+  },
+  {
+    "id": 32,
+    "name": "Quilindschy Hartman",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/q4nz0l1757174516.png",
+    "position": "Left-Back",
+    "team": "Burnley",
+    "sportsDbId": "34216593"
+  },
+  {
+    "id": 33,
+    "name": "Micky van de Ven",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:46:27.130Z",
+    "attempts": 1
+  },
+  {
+    "id": 34,
+    "name": "Jarrod Bowen",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/z968j71756984854.png",
+    "position": "Right Winger",
+    "team": "West Ham",
+    "sportsDbId": "34145894"
+  },
+  {
+    "id": 35,
+    "name": "Jarrad Branthwaite",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/281uh81756976529.png",
+    "position": "Centre-Back",
+    "team": "Everton",
+    "sportsDbId": "34176458"
+  },
+  {
+    "id": 36,
+    "name": "Adrien Truffert",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/qmpz4n1757018404.png",
+    "position": "Left-Back",
+    "team": "Bournemouth",
+    "sportsDbId": "34173134"
+  },
+  {
+    "id": 37,
+    "name": "Kaoru Mitoma",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/1hwrck1756998804.png",
+    "position": "Left Wing",
+    "team": "Brighton and Hove Albion",
+    "sportsDbId": "34179731"
+  },
+  {
+    "id": 38,
+    "name": "Neco Williams",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/qzuqwn1757163242.png",
+    "position": "Right-Back",
+    "team": "Nottingham Forest",
+    "sportsDbId": "34168990"
+  },
+  {
+    "id": 39,
+    "name": "Max Kilman",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/1ttexx1756984451.png",
+    "position": "Centre-Back",
+    "team": "West Ham United",
+    "sportsDbId": "34170171"
+  },
+  {
+    "id": 40,
+    "name": "Elliot Anderson",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/rhm8q21757162869.png",
+    "position": "Central Midfield",
+    "team": "Nottingham Forest",
+    "sportsDbId": "34175393"
+  },
+  {
+    "id": 41,
+    "name": "Pau Torres",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/pxsy2h1756987313.png",
+    "position": "Centre-Back",
+    "team": "Aston Villa",
+    "sportsDbId": "34170332"
+  },
+  {
+    "id": 42,
+    "name": "Dominic Solanke",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/e4lpxy1757016341.png",
+    "position": "Centre-Forward",
+    "team": "Tottenham",
+    "sportsDbId": "34145539"
+  },
+  {
+    "id": 43,
+    "name": "Nico O'Reilly",
+    "imageUrl": "/player-images/oreilly.png",
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:46:46.289Z",
+    "attempts": 1
+  },
+  {
+    "id": 44,
+    "name": "Estevao",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/cdcih71757001906.png",
+    "position": "Right Winger",
+    "team": "Chelsea",
+    "sportsDbId": "34232908"
+  },
+  {
+    "id": 45,
+    "name": "Ao Tanaka",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:47:02.932Z",
+    "attempts": 1
+  },
+  {
+    "id": 46,
+    "name": "Harvey Barnes",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/h4ujtn1766824904.png",
+    "position": "Left Wing",
+    "team": "Newcastle United",
+    "sportsDbId": "34161470"
+  },
+  {
+    "id": 47,
+    "name": "Thierno Barry",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/jjmhdw1756977094.png",
+    "position": "Centre-Forward",
+    "team": "Everton",
+    "sportsDbId": "34224712"
+  },
+  {
+    "id": 48,
+    "name": "Thomas Soucek",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:47:19.923Z",
+    "attempts": 1
+  },
+  {
+    "id": 49,
+    "name": "Maxim De Cuyper",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:47:36.261Z",
+    "attempts": 1
+  },
+  {
+    "id": 50,
+    "name": "Lucas Digne",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/ywg68z1756984819.png",
+    "position": "Left-Back",
+    "team": "Aston Villa",
+    "sportsDbId": "34152565"
+  },
+  {
+    "id": 51,
+    "name": "Matheus Cunha",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/29x61e1762020281.png",
+    "position": "Centre-Forward",
+    "team": "Manchester United",
+    "sportsDbId": "34169290"
+  },
+  {
+    "id": 52,
+    "name": "Ola Aina",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/3rasdy1757162843.png",
+    "position": "Right-Back",
+    "team": "Nottingham Forest",
+    "sportsDbId": "34160909"
+  },
+  {
+    "id": 53,
+    "name": "Rayan Ait Nouri",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/pxl8n91769182693.png",
+    "position": "Left-Back",
+    "team": "Manchester City",
+    "sportsDbId": "34168127"
+  },
+  {
+    "id": 54,
+    "name": "Carlos Baleba",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/52x9bk1756994205.png",
+    "position": "Defensive Midfield",
+    "team": "Brighton and Hove Albion",
+    "sportsDbId": "34201891"
+  },
+  {
+    "id": 55,
+    "name": "Rodri",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/0ml2zi1761148957.png",
+    "position": "Centre-Forward",
+    "team": "Wrexham",
+    "sportsDbId": "34145747"
+  },
+  {
+    "id": 56,
+    "name": "Chris Rigg",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/e1v5xd1757073210.png",
+    "position": "Central Midfield",
+    "team": "Sunderland",
+    "sportsDbId": "34215704"
+  },
+  {
+    "id": 57,
+    "name": "Ismalia Sarr",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:47:54.762Z",
+    "attempts": 1
+  },
+  {
+    "id": 58,
+    "name": "Raul Jimenez",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/w4chsd1757070949.png",
+    "position": "Centre-Forward",
+    "team": "Fulham",
+    "sportsDbId": "34159237"
+  },
+  {
+    "id": 59,
+    "name": "Granit Xhaka",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/2xa5dp1756903726.png",
+    "position": "Defensive Midfield",
+    "team": "Sunderland",
+    "sportsDbId": "34160884"
+  },
+  {
+    "id": 60,
+    "name": "Rio Ngumoah",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:48:11.738Z",
+    "attempts": 1
+  },
+  {
+    "id": 61,
+    "name": "Sander Berge",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/plhdsy1757070706.png",
+    "position": "Defensive Midfield",
+    "team": "Fulham",
+    "sportsDbId": "34169678"
+  },
+  {
+    "id": 62,
+    "name": "Morgan Rogers",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/hcpqx81756987242.png",
+    "position": "Left Wing",
+    "team": "Aston Villa",
+    "sportsDbId": "34177247"
+  },
+  {
+    "id": 63,
+    "name": "Justin Devenny",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/ommdbm1766828242.png",
+    "position": "Midfielder",
+    "team": "Crystal Palace",
+    "sportsDbId": "34253711"
+  },
+  {
+    "id": 64,
+    "name": "Joachim Andersen",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/f4r1st1757070196.png",
+    "position": "Centre-Back",
+    "team": "Fulham",
+    "sportsDbId": "34155862"
+  },
+  {
+    "id": 65,
+    "name": "Alex Iwobi",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/o2a0dm1757071197.png",
+    "position": "Attacking Midfield",
+    "team": "Fulham",
+    "sportsDbId": "34145419"
+  },
+  {
+    "id": 66,
+    "name": "Christoph Baumgartner",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/7gy4ar1763561036.png",
+    "position": "Attacking Midfield",
+    "team": "RB Leipzig",
+    "sportsDbId": "34169209"
+  },
+  {
+    "id": 67,
+    "name": "Deniz Undav",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/hcxx8s1763586492.png",
+    "position": "Centre-Forward",
+    "team": "Stuttgart",
+    "sportsDbId": "34200113"
+  },
+  {
+    "id": 68,
+    "name": "Jeff Chabot",
+    "imageUrl": null,
+    "position": "Centre-Back",
+    "team": "_Retired-Soccer",
+    "sportsDbId": "34273627",
+    "lastAttempt": "2026-02-27T17:48:30.305Z",
+    "attempts": 1
+  },
+  {
+    "id": 69,
+    "name": "Johan Manzambi",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/pg2bjt1763328991.png",
+    "position": "Central Midfield",
+    "team": "Freiburg",
+    "sportsDbId": "34279576"
+  },
+  {
+    "id": 70,
+    "name": "Lennart Karl",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/3w7etc1756408662.png",
+    "position": "Midfielder",
+    "team": "Bayern Munich",
+    "sportsDbId": "34346666"
+  },
+  {
+    "id": 71,
+    "name": "Matthias Ginter",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/5q6niz1763328818.png",
+    "position": "Defender",
+    "team": "Freiburg",
+    "sportsDbId": "34154876"
+  },
+  {
+    "id": 72,
+    "name": "Leon Goretzka",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/hnokj01756409111.png",
+    "position": "Central Midfield",
+    "team": "Bayern Munich",
+    "sportsDbId": "34155261"
+  },
+  {
+    "id": 73,
+    "name": "Angelo Stiller",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/fjia5b1763586463.png",
+    "position": "Midfielder",
+    "team": "Stuttgart",
+    "sportsDbId": "34178798"
+  },
+  {
+    "id": 74,
+    "name": "Maximilian Eggestein",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/6lo1mc1763328805.png",
+    "position": "Midfielder",
+    "team": "Freiburg",
+    "sportsDbId": "34155332"
+  },
+  {
+    "id": 75,
+    "name": "Ellyes Skhiri",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/zhs8151762287564.png",
+    "position": "Midfielder",
+    "team": "Eintracht Frankfurt",
+    "sportsDbId": "34146678"
+  },
+  {
+    "id": 76,
+    "name": "Billy Gilmour",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/axk63s1764089469.png",
+    "position": "Defensive Midfield",
+    "team": "Napoli",
+    "sportsDbId": "34169971"
+  },
+  {
+    "id": 77,
+    "name": "Christopher Nkunku",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/0zhdh61758893135.png",
+    "position": "Attacking Midfield",
+    "team": "AC Milan",
+    "sportsDbId": "34162097"
+  },
+  {
+    "id": 78,
+    "name": "Rafael Leao",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/tlgrvf1758892567.png",
+    "position": "Left Wing",
+    "team": "AC Milan",
+    "sportsDbId": "34165647"
+  },
+  {
+    "id": 79,
+    "name": "Christian Pulisic",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/qwii9r1758893548.png",
+    "position": "Right Winger",
+    "team": "AC Milan",
+    "sportsDbId": "34163470"
+  },
+  {
+    "id": 80,
+    "name": "Lautaro Martinez",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/vwxq811759408924.png",
+    "position": "Centre-Forward",
+    "team": "Inter Milan",
+    "sportsDbId": "34164252"
+  },
+  {
+    "id": 81,
+    "name": "Alessandro Bastoni",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/hwixpa1759408795.png",
+    "position": "Centre-Back",
+    "team": "Inter Milan",
+    "sportsDbId": "34169455"
+  },
+  {
+    "id": 82,
+    "name": "Riccardo Orsolini",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/hkoyvk1758897555.png",
+    "position": "Forward",
+    "team": "Bologna",
+    "sportsDbId": "34169386"
+  },
+  {
+    "id": 83,
+    "name": "Fikayo Tomori",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/7a8yy11758893186.png",
+    "position": "Centre-Back",
+    "team": "AC Milan",
+    "sportsDbId": "34160914"
+  },
+  {
+    "id": 84,
+    "name": "Giovanni Simeone",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/vyiclr1758813227.png",
+    "position": "Centre-Forward",
+    "team": "Torino",
+    "sportsDbId": "34164501"
+  },
+  {
+    "id": 85,
+    "name": "Stanislav Lobotka",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/spo0qz1762288279.png",
+    "position": "Defensive Midfield",
+    "team": "Napoli",
+    "sportsDbId": "34162023"
+  },
+  {
+    "id": 86,
+    "name": "Dusan Vlahovic",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/rl2w191759225532.png",
+    "position": "Centre-Forward",
+    "team": "Juventus",
+    "sportsDbId": "34164507"
+  },
+  {
+    "id": 87,
+    "name": "Gianluca Scamacca",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/xp4bqm1695157525.png",
+    "position": "Centre-Forward",
+    "team": "Atalanta",
+    "sportsDbId": "34172633"
+  },
+  {
+    "id": 88,
+    "name": "Berat Djimsiti",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/a1u2x81695157220.png",
+    "position": "Centre-Back",
+    "team": "Atalanta",
+    "sportsDbId": "34164230"
+  },
+  {
+    "id": 89,
+    "name": "Ansgar Knauff",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/zbsia51762287603.png",
+    "position": "Left Wing",
+    "team": "Eintracht Frankfurt",
+    "sportsDbId": "34178465"
+  },
+  {
+    "id": 90,
+    "name": "Robin Koch",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/emkkrq1762287435.png",
+    "position": "Defender",
+    "team": "Eintracht Frankfurt",
+    "sportsDbId": "34169179"
+  },
+  {
+    "id": 91,
+    "name": "Mario Gotze",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/p4b80x1762287406.png",
+    "position": "Attacking Midfield",
+    "team": "Eintracht Frankfurt",
+    "sportsDbId": "34146697"
+  },
+  {
+    "id": 92,
+    "name": "Federico Dimarco",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/0rhwx41759408849.png",
+    "position": "Left-Back",
+    "team": "Inter Milan",
+    "sportsDbId": "34147121"
+  },
+  {
+    "id": 93,
+    "name": "Paulo Dybala",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/pjupvq1758815223.png",
+    "position": "Second Striker",
+    "team": "Roma",
+    "sportsDbId": "34148200"
+  },
+  {
+    "id": 94,
+    "name": "Juan Miranda",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/myhl881731100920.png",
+    "position": "Left-Back",
+    "team": "Bologna",
+    "sportsDbId": "34169295"
+  },
+  {
+    "id": 95,
+    "name": "Kenan Yıldız",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/zgep4d1759225554.png",
+    "position": "Left Wing",
+    "team": "Juventus",
+    "sportsDbId": "34220247"
+  },
+  {
+    "id": 96,
+    "name": "Leonardo Spinazzola",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/qwkncg1764089685.png",
+    "position": "Left-Back",
+    "team": "Napoli",
+    "sportsDbId": "34164763"
+  },
+  {
+    "id": 97,
+    "name": "Santiago Castro",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/mrbdis1758896882.png",
+    "position": "Centre-Forward",
+    "team": "Bologna",
+    "sportsDbId": "34231521"
+  },
+  {
+    "id": 98,
+    "name": "Rasmus Hojlund",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/jop7ho1762288170.png",
+    "position": "Centre-Forward",
+    "team": "Napoli",
+    "sportsDbId": "34175960"
+  },
+  {
+    "id": 99,
+    "name": "Matias Soule",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/496dau1758815193.png",
+    "position": "Forward",
+    "team": "Roma",
+    "sportsDbId": "34200637"
+  },
+  {
+    "id": 100,
+    "name": "Marcus Thuram",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/aykui01759408989.png",
+    "position": "Centre-Forward",
+    "team": "Inter Milan",
+    "sportsDbId": "34169231"
+  },
+  {
+    "id": 101,
+    "name": "Amir Rrahmani",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/hvd5tq1762288248.png",
+    "position": "Defender",
+    "team": "Napoli",
+    "sportsDbId": "34169562"
+  },
+  {
+    "id": 102,
+    "name": "Kevin De Bruyne",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:48:56.539Z",
+    "attempts": 1
+  },
+  {
+    "id": 103,
+    "name": "Wesley",
+    "imageUrl": "/player-images/wesley.png",
+    "position": "Defender",
+    "team": "_Retired Soccer",
+    "sportsDbId": "34146748",
+    "lastAttempt": "2026-02-27T17:49:12.969Z",
+    "attempts": 1
+  },
+  {
+    "id": 104,
+    "name": "Scott McTominay",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/b7truo1762288079.png",
+    "position": "Defensive Midfield",
+    "team": "Napoli",
+    "sportsDbId": "34168051"
+  },
+  {
+    "id": 105,
+    "name": "Joao Mario",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/fc2hqy1632996322.png",
+    "position": "Midfielder",
+    "team": "Beşiktaş",
+    "sportsDbId": "34191431"
+  },
+  {
+    "id": 106,
+    "name": "Charles De Ketelaere",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:49:30.001Z",
+    "attempts": 1
+  },
+  {
+    "id": 107,
+    "name": "Federico Gatti",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/z1jv3i1759224911.png",
+    "position": "Defender",
+    "team": "Juventus",
+    "sportsDbId": "34194579"
+  },
+  {
+    "id": 108,
+    "name": "Odilon Kossounou",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/p876cf1764331393.png",
+    "position": "Centre-Back",
+    "team": "Atalanta",
+    "sportsDbId": "34171312"
+  },
+  {
+    "id": 109,
+    "name": "Nicolo Paz",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:49:46.909Z",
+    "attempts": 1
+  },
+  {
+    "id": 110,
+    "name": "Jens Odgaard",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/ls06i11758896851.png",
+    "position": "Right Winger",
+    "team": "Bologna",
+    "sportsDbId": "34216573"
+  },
+  {
+    "id": 111,
+    "name": "Xaver Schlager",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/1bvq9r1763561361.png",
+    "position": "Midfielder",
+    "team": "RB Leipzig",
+    "sportsDbId": "34169339"
+  },
+  {
+    "id": 112,
+    "name": "Yan Diomande",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/zbzyn51763561086.png",
+    "position": "Attacker",
+    "team": "RB Leipzig",
+    "sportsDbId": "34336277"
+  },
+  {
+    "id": 113,
+    "name": "Castello Lukeba",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/3wfwi21763561231.png",
+    "position": "Centre-Back",
+    "team": "RB Leipzig",
+    "sportsDbId": "34192506"
+  },
+  {
+    "id": 114,
+    "name": "Willi Orban",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/b22j2h1763561311.png",
+    "position": "Centre-Back",
+    "team": "RB Leipzig",
+    "sportsDbId": "34164077"
+  },
+  {
+    "id": 115,
+    "name": "Mohamed Amoura",
+    "imageUrl": "/player-images/amoura.png",
+    "position": "Centre-Forward",
+    "team": "_Retired-Soccer",
+    "sportsDbId": "34278765",
+    "lastAttempt": "2026-02-27T17:50:04.745Z",
+    "attempts": 1
+  },
+  {
+    "id": 116,
+    "name": "Eberechi Eze",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/jcabmd1769330240.png",
+    "position": "Attacking Midfield",
+    "team": "Arsenal",
+    "sportsDbId": "34172278"
+  },
+  {
+    "id": 117,
+    "name": "Viktor Gyokeres",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/ubnx241769330610.png",
+    "position": "Centre-Forward",
+    "team": "Arsenal",
+    "sportsDbId": "34173576"
+  },
+  {
+    "id": 118,
+    "name": "Gabriel Martinelli",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/pnwfls1769331152.png",
+    "position": "Left Wing",
+    "team": "Arsenal",
+    "sportsDbId": "34169883"
+  },
+  {
+    "id": 119,
+    "name": "Martín Zubimendi",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/lj71fn1769331598.png",
+    "position": "Defensive Midfield",
+    "team": "Arsenal",
+    "sportsDbId": "34172850"
+  },
+  {
+    "id": 120,
+    "name": "Gabriel Magalhaes",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/trz5x71769331076.png",
+    "position": "Centre-Back",
+    "team": "Arsenal",
+    "sportsDbId": "34172252"
+  },
+  {
+    "id": 121,
+    "name": "Myles Lewis-Skelly",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/7g2c521769330817.png",
+    "position": "Midfielder",
+    "team": "Arsenal",
+    "sportsDbId": "34244630"
+  },
+  {
+    "id": 122,
+    "name": "Patrik Schick",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/zfxtjv1756316702.png",
+    "position": "Centre-Forward",
+    "team": "Bayer Leverkusen",
+    "sportsDbId": "34163662"
+  },
+  {
+    "id": 123,
+    "name": "Luka Modric",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/msewdx1758892756.png",
+    "position": "Central Midfield",
+    "team": "AC Milan",
+    "sportsDbId": "34146306"
+  },
+  {
+    "id": 124,
+    "name": "Malik Tillman",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/8d8h2y1756316767.png",
+    "position": "Attacking Midfield",
+    "team": "Bayer Leverkusen",
+    "sportsDbId": "34192962"
+  },
+  {
+    "id": 125,
+    "name": "Edmond Tapsoba",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/y3bmxs1756316512.png",
+    "position": "Centre-Back",
+    "team": "Bayer Leverkusen",
+    "sportsDbId": "34169692"
+  },
+  {
+    "id": 126,
+    "name": "Youssouf Fofana",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/3npg7a1758892447.png",
+    "position": "Central Midfield",
+    "team": "AC Milan",
+    "sportsDbId": "34169673"
+  },
+  {
+    "id": 127,
+    "name": "Piotr Zielinski",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/8wynz41759408193.png",
+    "position": "Central Midfield",
+    "team": "Inter Milan",
+    "sportsDbId": "34163619"
+  },
+  {
+    "id": 128,
+    "name": "Manuel Akanji",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/k7o5oh1759408095.png",
+    "position": "Centre-Back",
+    "team": "Inter Milan",
+    "sportsDbId": "34162132"
+  },
+  {
+    "id": 129,
+    "name": "Anthony Elanga",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/zptapf1770796138.png",
+    "position": "Left Wing",
+    "team": "Newcastle United",
+    "sportsDbId": "34179948"
+  },
+  {
+    "id": 130,
+    "name": "Ruben Loftus-Cheek",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/hydb081758892631.png",
+    "position": "Central Midfield",
+    "team": "AC Milan",
+    "sportsDbId": "34145543"
+  },
+  {
+    "id": 131,
+    "name": "Kieran Trippier",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/8o2x7l1766824815.png",
+    "position": "Right-Back",
+    "team": "Newcastle",
+    "sportsDbId": "34146030"
+  },
+  {
+    "id": 132,
+    "name": "Jarell Quansah",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/wfep8o1756316392.png",
+    "position": "Centre-Back",
+    "team": "Bayer Leverkusen",
+    "sportsDbId": "34217608"
+  },
+  {
+    "id": 133,
+    "name": "Nicolo Barella",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/k03sge1759408783.png",
+    "position": "Central Midfield",
+    "team": "Inter Milan",
+    "sportsDbId": "34148307"
+  },
+  {
+    "id": 134,
+    "name": "Erling Haaland",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/un3jr11769182465.png",
+    "position": "Centre-Forward",
+    "team": "Manchester City",
+    "sportsDbId": "34169116"
+  },
+  {
+    "id": 135,
+    "name": "Francesco Pio Esposito",
+    "imageUrl": null,
+    "position": null,
+    "team": null,
+    "sportsDbId": null,
+    "lastAttempt": "2026-02-27T17:50:26.761Z",
+    "attempts": 1
+  },
+  {
+    "id": 136,
+    "name": "Nick Woltemade ",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/guakb31766824614.png",
+    "position": "Forward",
+    "team": "Newcastle United",
+    "sportsDbId": "34170126"
+  },
+  {
+    "id": 137,
+    "name": "Ernest Poku",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/h7u26r1756315418.png",
+    "position": "Centre-Forward",
+    "team": "Bayer Leverkusen",
+    "sportsDbId": "34220695"
+  },
+  {
+    "id": 138,
+    "name": "Anthony Gordon",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/8ztck61766824986.png",
+    "position": "Left Wing",
+    "team": "Newcastle United",
+    "sportsDbId": "34170142"
+  },
+  {
+    "id": 139,
+    "name": "Jacob Murphy",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/c17gy11766824892.png",
+    "position": "Right Winger",
+    "team": "Newcastle United",
+    "sportsDbId": "34147821"
+  },
+  {
+    "id": 140,
+    "name": "William Osula",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/2abxt11766824652.png",
+    "position": "Centre-Forward",
+    "team": "Newcastle",
+    "sportsDbId": "34220041"
+  },
+  {
+    "id": 141,
+    "name": "Alejandro Grimaldo",
+    "imageUrl": null,
+    "position": "Left-Back",
+    "team": "_Retired-Soccer",
+    "sportsDbId": "34271260",
+    "lastAttempt": "2026-02-27T17:50:44.596Z",
+    "attempts": 1
+  },
+  {
+    "id": 142,
+    "name": "Sven Botman",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/xkp4kt1766824696.png",
+    "position": "Centre-Back",
+    "team": "Newcastle United",
+    "sportsDbId": "34170556"
+  },
+  {
+    "id": 143,
+    "name": "Robert Andrich",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/fw2c8c1756315716.png",
+    "position": "Defensive Midfield",
+    "team": "Bayer Leverkusen",
+    "sportsDbId": "34169322"
+  },
+  {
+    "id": 144,
+    "name": "Yann Bisseck",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/4unlga1759408810.png",
+    "position": "Defender",
+    "team": "Inter Milan",
+    "sportsDbId": "34191710"
+  },
+  {
+    "id": 145,
+    "name": "Joe Willock",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/w61rgd1766824855.png",
+    "position": "Central Midfield",
+    "team": "Newcastle United",
+    "sportsDbId": "34170831"
+  },
+  {
+    "id": 146,
+    "name": "Luis Henrique",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/thumb/nazanp1527521197.jpg",
+    "position": "Forward",
+    "team": "Feirense",
+    "sportsDbId": "34163271"
+  },
+  {
+    "id": 147,
+    "name": "Exequiel Palacios",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/oby41y1756316369.png",
+    "position": "Midfielder",
+    "team": "Bayer Leverkusen",
+    "sportsDbId": "34169228"
+  },
+  {
+    "id": 148,
+    "name": "Aleix García",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/8abnca1756316053.png",
+    "position": "Central Midfield",
+    "team": "Bayer Leverkusen",
+    "sportsDbId": "34176867"
+  },
+  {
+    "id": 149,
+    "name": "Kiernan Dewsbury-Hall",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/2dwgjj1756976787.png",
+    "position": "Central Midfield",
+    "team": "Everton",
+    "sportsDbId": "34175839",
+    "lastAttempt": "2026-02-27T17:51:03.024Z",
+    "attempts": 1
+  },
+  {
+    "id": 150,
+    "name": "Iliman Ndiaye",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/rten2t1756977078.png",
+    "position": "Midfielder",
+    "team": "Everton",
+    "sportsDbId": "34178338",
+    "lastAttempt": "2026-02-27T17:51:19.462Z",
+    "attempts": 1
+  },
+  {
+    "id": 151,
+    "name": "Brian Brobbey",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/q3qz441762198721.png",
+    "position": "Centre-Forward",
+    "team": "Sunderland",
+    "sportsDbId": "34173230",
+    "lastAttempt": "2026-02-27T17:51:36.042Z",
+    "attempts": 1
+  },
+  {
+    "id": 152,
+    "name": "Lewis Cook",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/uf2dcw1757018455.png",
+    "position": "Central Midfield",
+    "team": "Bournemouth",
+    "sportsDbId": "34147875",
+    "lastAttempt": "2026-02-27T17:51:52.592Z",
+    "attempts": 1
+  },
+  {
+    "id": 153,
+    "name": "Igor Thiago",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/irs8wu1765971888.png",
+    "position": "Forward",
+    "team": "Brentford",
+    "sportsDbId": "34249031",
+    "lastAttempt": "2026-02-27T17:52:09.133Z",
+    "attempts": 1
+  },
+  {
+    "id": 154,
+    "name": "Idrissa Gueye",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/ag9fm11756976825.png",
+    "position": "Central Midfield",
+    "team": "Everton",
+    "sportsDbId": "34147351",
+    "lastAttempt": "2026-02-27T17:52:25.577Z",
+    "attempts": 1
+  },
+  {
+    "id": 155,
+    "name": "Virgil van Dijk",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/9cxf2q1757087742.png",
+    "position": "Centre-Back",
+    "team": "Liverpool",
+    "sportsDbId": "34147021",
+    "lastAttempt": "2026-02-27T17:52:41.884Z",
+    "attempts": 1
+  },
+  {
+    "id": 156,
+    "name": "Ibrahima Konate",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/izock91757088476.png",
+    "position": "Centre-Back",
+    "team": "Liverpool",
+    "sportsDbId": "34164103",
+    "lastAttempt": "2026-02-27T17:52:58.283Z",
+    "attempts": 1
+  }
+]
