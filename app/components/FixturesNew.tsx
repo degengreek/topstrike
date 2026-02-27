@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Zap, Clock } from 'lucide-react'
+import { Zap, Clock, Calendar } from 'lucide-react'
 import type { FootballDataMatch } from '@/lib/football-data-fixtures'
 
 interface FixturesNewProps {
@@ -124,10 +124,10 @@ export default function FixturesNew({ playerTeams }: FixturesNewProps) {
         {/* Tabs */}
         <div className="flex gap-2">
           <button
-            onClick={() => setActiveTab('upcoming')}
+            onClick={() => setActiveSubTab('upcoming')}
             className={`
               px-4 py-2 rounded-lg text-sm font-semibold transition-all
-              ${activeTab === 'upcoming'
+              ${activeSubTab === 'upcoming'
                 ? 'bg-blue-600 text-white'
                 : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
               }
@@ -140,10 +140,10 @@ export default function FixturesNew({ playerTeams }: FixturesNewProps) {
           </button>
 
           <button
-            onClick={() => setActiveTab('live')}
+            onClick={() => setActiveSubTab('live')}
             className={`
               px-4 py-2 rounded-lg text-sm font-semibold transition-all
-              ${activeTab === 'live'
+              ${activeSubTab === 'live'
                 ? 'bg-red-600 text-white'
                 : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
               }
@@ -159,7 +159,7 @@ export default function FixturesNew({ playerTeams }: FixturesNewProps) {
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto">
-        {activeTab === 'live' && (
+        {activeSubTab === 'live' && (
           <div className="space-y-3">
             {liveGames.length === 0 ? (
               <div className="text-center text-gray-400 py-8">
@@ -212,7 +212,7 @@ export default function FixturesNew({ playerTeams }: FixturesNewProps) {
           </div>
         )}
 
-        {activeTab === 'upcoming' && (
+        {activeSubTab === 'upcoming' && (
           <div className="space-y-3">
             {upcomingFixtures.length === 0 ? (
               <div className="text-center text-gray-400 py-8">

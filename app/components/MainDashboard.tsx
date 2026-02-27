@@ -58,9 +58,9 @@ export default function MainDashboard() {
     // Check Twitter-linked wallet
     if (session?.user?.id) {
       const linkedWallet = getWalletLink(session.user.id)
-      if (linkedWallet && linkedWallet.walletAddress) {
-        setWalletAddress(linkedWallet.walletAddress)
-        handleSearch(linkedWallet.walletAddress)
+      if (linkedWallet) {
+        setWalletAddress(linkedWallet)
+        handleSearch(linkedWallet)
       } else {
         setShowWalletLink(true)
       }
@@ -119,7 +119,7 @@ export default function MainDashboard() {
             return {
               id: p.id.toString(),
               name: p.name,
-              position: normalizePosition(override.position),
+              position: normalizePosition(override.position || null),
               team: override.team,
               imageUrl: imageUrl,
               currentPriceInWei: p.currentPriceInWei,
