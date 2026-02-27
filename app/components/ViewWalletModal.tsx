@@ -101,8 +101,15 @@ export default function ViewWalletModal({
                 {players.map((player) => (
                   <div
                     key={player.id}
-                    className="bg-gray-700/50 rounded-lg p-4 border border-gray-600"
+                    className="relative bg-gray-700/50 rounded-lg p-4 border border-gray-600"
                   >
+                    {/* Shares Badge */}
+                    {player.sharesOwnedInFullShares && player.sharesOwnedInFullShares > 1 && (
+                      <div className="absolute top-2 right-2 bg-blue-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-lg">
+                        {player.sharesOwnedInFullShares}
+                      </div>
+                    )}
+
                     <div className="flex flex-col items-center mb-3">
                       {player.imageUrl ? (
                         <img
