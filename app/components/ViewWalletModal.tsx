@@ -1,6 +1,7 @@
 'use client'
 
 import { X, Eye } from 'lucide-react'
+import { getTopStrikeUsername } from '@/lib/topstrike-usernames'
 
 interface Player {
   id: string
@@ -34,6 +35,7 @@ export default function ViewWalletModal({
   }
 
   const shortAddress = `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`
+  const username = getTopStrikeUsername(walletAddress)
 
   return (
     <div
@@ -52,7 +54,9 @@ export default function ViewWalletModal({
                 <Eye className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-white">Viewing Wallet</h2>
+                <h2 className="text-xl font-bold text-white">
+                  {username ? `Viewing ${username}` : 'Viewing Wallet'}
+                </h2>
                 <p className="text-sm text-blue-100">{shortAddress}</p>
               </div>
             </div>
