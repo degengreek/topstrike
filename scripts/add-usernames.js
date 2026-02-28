@@ -134,6 +134,9 @@ async function main() {
         const existing = readExistingUsernames()
         const extracted = extractUsernames(jsonText)
 
+        console.log(`📦 Existing entries: ${Object.keys(existing).length}`)
+        console.log(`📦 Extracted entries: ${Object.keys(extracted).length}`)
+
         let added = 0
         let updated = 0
 
