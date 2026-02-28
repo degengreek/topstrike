@@ -10,6 +10,7 @@ import { getTeamOverride } from '@/lib/team-overrides'
 import { getVerifiedPlayerData } from '@/lib/verified-players'
 import { loadSquad, saveSquad, clearSavedSquad } from '@/lib/squad-storage'
 import { saveWalletLink, getWalletLink } from '@/lib/wallet-storage'
+import { getTopStrikeUsername } from '@/lib/topstrike-usernames'
 import { formations, FormationType } from '@/lib/formations'
 import Header from './Header'
 import SquadBuilderTab from './SquadBuilderTab'
@@ -228,7 +229,9 @@ export default function MainDashboard() {
 
         // Also link wallet to Twitter if signed in
         if (session?.user?.id) {
-          saveWalletLink(session.user.id, session.user.name || '', address)
+          // Check if we have a TopStrike username mapping for this wallet
+          const topStrikeUsername = getTopStrikeUsername(address)
+          saveWalletLink(session.user.id, session.user.name || '', address, topStrikeUsername || undefined)
         }
       } else {
         // This is a searched wallet (for viewing only)

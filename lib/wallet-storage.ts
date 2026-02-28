@@ -9,6 +9,7 @@ interface WalletLink {
   twitterId: string
   twitterUsername: string
   walletAddress: string
+  topStrikeUsername?: string  // Optional: TopStrike username if known
   linkedAt: string
 }
 
@@ -18,7 +19,8 @@ interface WalletLink {
 export function saveWalletLink(
   twitterId: string,
   twitterUsername: string,
-  walletAddress: string
+  walletAddress: string,
+  topStrikeUsername?: string
 ): void {
   try {
     const links = getAllWalletLinks()
@@ -29,6 +31,7 @@ export function saveWalletLink(
       twitterId,
       twitterUsername,
       walletAddress,
+      topStrikeUsername,  // Store TopStrike username if provided
       linkedAt: new Date().toISOString()
     }
 
