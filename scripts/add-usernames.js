@@ -74,15 +74,33 @@ export function getTopStrikeUsername(walletAddress: string): string | null {
 // Extract usernames from activity JSON
 function extractUsernames(jsonText) {
   try {
-    const data = JSON.parse(jsonText)
+    // Try to parse as JSON
+    let data
+    try {
+      data = JSON.parse(jsonText)
+    } catch (parseErr) {
+      // Try wrapping in braces if it's just the activity part
+      try {
+        data = JSON.parse(`{${jsonText}}`)
+      } catch {
+        console.error('❌ Invalid JSON format')
+        console.log('\n💡 Tip: Make sure to paste valid JSON starting with {')
+        return {}
+      }
+    }
+
     const usernames = {}
 
-    if (!data.activity || !Array.isArray(data.activity)) {
+    // Handle if data is the full response or just activity array
+    let activities = data.activity || data
+
+    if (!Array.isArray(activities)) {
       console.log('⚠️  No activity array found in JSON')
+      console.log('💡 Expected format: { "activity": [...] }')
       return usernames
     }
 
-    for (const item of data.activity) {
+    for (const item of activities) {
       if (item.trade && item.trade.trader && item.username) {
         const wallet = item.trade.trader.toLowerCase()
         const username = item.username
@@ -90,9 +108,13 @@ function extractUsernames(jsonText) {
       }
     }
 
+    if (Object.keys(usernames).length === 0) {
+      console.log('⚠️  No trader/username pairs found in the data')
+    }
+
     return usernames
   } catch (err) {
-    console.error('❌ Error parsing JSON:', err.message)
+    console.error('❌ Error:', err.message)
     return {}
   }
 }
@@ -101,8 +123,12 @@ function extractUsernames(jsonText) {
 async function main() {
   console.log('🎯 TopStrike Username Extractor')
   console.log('================================\n')
-  console.log('Paste activity JSON, then press Enter twice to process')
-  console.log('Type "exit" to quit\n')
+  console.log('Instructions:')
+  console.log('1. Paste the FULL JSON response (starting with {)')
+  console.log('2. Press Enter twice (empty line) to process')
+  console.log('3. Type "exit" to quit\n')
+  console.log('Example format:')
+  console.log('{ "activity": [ { "trade": {...}, "username": "..." } ] }\n')
 
   const rl = readline.createInterface({
     input: process.stdin,
