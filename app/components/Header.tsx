@@ -5,8 +5,8 @@ import { Search, LogOut, Wallet, Eye, EyeOff, Copy, Check } from 'lucide-react'
 import { signIn, signOut, useSession } from 'next-auth/react'
 
 interface HeaderProps {
-  activeTab: 'squad' | 'portfolio' | 'fixtures'
-  onTabChange: (tab: 'squad' | 'portfolio' | 'fixtures') => void
+  activeTab: 'squad' | 'portfolio' | 'fixtures' | 'leaderboard'
+  onTabChange: (tab: 'squad' | 'portfolio' | 'fixtures' | 'leaderboard') => void
   onSearch: (address: string) => void
   searchValue: string
   onSearchChange: (value: string) => void
@@ -206,6 +206,16 @@ export default function Header({
             }`}
           >
             Fixtures
+          </button>
+          <button
+            onClick={() => onTabChange('leaderboard')}
+            className={`px-6 py-3 font-semibold transition-all ${
+              activeTab === 'leaderboard'
+                ? 'text-white border-b-2 border-green-500'
+                : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            🏆 Leaderboard
           </button>
         </div>
       </div>
