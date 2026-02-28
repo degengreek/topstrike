@@ -116,7 +116,7 @@
   {
     "id": 13,
     "name": "Valentín Castellanos",
-    "imageUrl": null,
+    "imageUrl": "/player-images/castellanos.png",
     "position": "Forward",
     "team": "_Retired-Soccer",
     "sportsDbId": "34285072",
@@ -174,7 +174,7 @@
   {
     "id": 20,
     "name": "Emile Smith Rowe",
-    "imageUrl": null,
+    "imageUrl": "/player-images/smithrowe.png",
     "position": "Attacking Midfield",
     "team": "_Retired-Soccer",
     "sportsDbId": "34275185",
@@ -280,7 +280,7 @@
   {
     "id": 33,
     "name": "Micky van de Ven",
-    "imageUrl": null,
+    "imageUrl": "/player-images/vandeven.png",
     "position": null,
     "team": null,
     "sportsDbId": null,
@@ -380,7 +380,7 @@
   {
     "id": 45,
     "name": "Ao Tanaka",
-    "imageUrl": null,
+    "imageUrl": "/player-images/tanaka.png",
     "position": null,
     "team": null,
     "sportsDbId": null,
@@ -406,7 +406,7 @@
   {
     "id": 48,
     "name": "Thomas Soucek",
-    "imageUrl": null,
+    "imageUrl": "/player-images/soucek.png",
     "position": null,
     "team": null,
     "sportsDbId": null,
@@ -416,7 +416,7 @@
   {
     "id": 49,
     "name": "Maxim De Cuyper",
-    "imageUrl": null,
+    "imageUrl": "/player-images/decuyper.png",
     "position": null,
     "team": null,
     "sportsDbId": null,
@@ -482,7 +482,7 @@
   {
     "id": 57,
     "name": "Ismalia Sarr",
-    "imageUrl": null,
+    "imageUrl": "/player-images/sarr.png",
     "position": null,
     "team": null,
     "sportsDbId": null,
@@ -508,7 +508,7 @@
   {
     "id": 60,
     "name": "Rio Ngumoah",
-    "imageUrl": null,
+    "imageUrl": "/player-images/ngumoha.png",
     "position": null,
     "team": null,
     "sportsDbId": null,
@@ -574,7 +574,7 @@
   {
     "id": 68,
     "name": "Jeff Chabot",
-    "imageUrl": null,
+    "imageUrl": "/player-images/chabot.png",
     "position": "Centre-Back",
     "team": "_Retired-Soccer",
     "sportsDbId": "34273627",
@@ -848,7 +848,7 @@
   {
     "id": 102,
     "name": "Kevin De Bruyne",
-    "imageUrl": null,
+    "imageUrl": "/player-images/debruyne.png",
     "position": null,
     "team": null,
     "sportsDbId": null,
@@ -884,7 +884,7 @@
   {
     "id": 106,
     "name": "Charles De Ketelaere",
-    "imageUrl": null,
+    "imageUrl": "/player-images/deketelaere.png",
     "position": null,
     "team": null,
     "sportsDbId": null,
@@ -910,7 +910,7 @@
   {
     "id": 109,
     "name": "Nicolo Paz",
-    "imageUrl": null,
+    "imageUrl": "/player-images/paz.png",
     "position": null,
     "team": null,
     "sportsDbId": null,
@@ -1122,7 +1122,7 @@
   {
     "id": 135,
     "name": "Francesco Pio Esposito",
-    "imageUrl": null,
+    "imageUrl": "/player-images/esposito.png",
     "position": null,
     "team": null,
     "sportsDbId": null,
@@ -1172,7 +1172,7 @@
   {
     "id": 141,
     "name": "Alejandro Grimaldo",
-    "imageUrl": null,
+    "imageUrl": "/player-images/grimaldo.png",
     "position": "Left-Back",
     "team": "_Retired-Soccer",
     "sportsDbId": "34271260",
