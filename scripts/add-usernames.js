@@ -83,11 +83,14 @@ function extractUsernames(text) {
   const usernameMatches = text.matchAll(/"username":\s*"([^"]+)"/g)
   const usernamesList = [...usernameMatches].map(m => m[1])
 
+  console.log(`🔍 Found ${traders.length} trader(s), ${usernamesList.length} username(s)`)
+
   // Match them up (assuming they appear in same order)
   const minLength = Math.min(traders.length, usernamesList.length)
 
   for (let i = 0; i < minLength; i++) {
     usernames[traders[i]] = usernamesList[i]
+    console.log(`   👉 ${traders[i]} -> ${usernamesList[i]}`)
   }
 
   if (Object.keys(usernames).length === 0) {
