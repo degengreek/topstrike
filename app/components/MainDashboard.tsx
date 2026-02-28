@@ -10,7 +10,7 @@ import { getTeamOverride } from '@/lib/team-overrides'
 import { getVerifiedPlayerData } from '@/lib/verified-players'
 import { loadSquad, saveSquad, clearSavedSquad } from '@/lib/squad-storage'
 import { saveWalletLink, getWalletLink } from '@/lib/wallet-storage'
-import { getTopStrikeUsername } from '@/lib/topstrike-usernames'
+import { getTopStrikeUsername, getWalletByUsername } from '@/lib/topstrike-usernames'
 import { formations, FormationType } from '@/lib/formations'
 import Header from './Header'
 import SquadBuilderTab from './SquadBuilderTab'
@@ -256,7 +256,26 @@ export default function MainDashboard() {
 
   const handleSearchWallet = () => {
     if (!searchInput || !searchInput.trim()) return
-    fetchPortfolio(searchInput.trim(), false)
+
+    const input = searchInput.trim()
+
+    // Check if input is a wallet address (starts with 0x and is 42 chars)
+    const isWalletAddress = input.startsWith('0x') && input.length === 42
+
+    if (isWalletAddress) {
+      // Search by wallet address directly
+      fetchPortfolio(input, false)
+    } else {
+      // Search by username - look up the wallet address
+      const walletAddress = getWalletByUsername(input)
+
+      if (walletAddress) {
+        fetchPortfolio(walletAddress, false)
+      } else {
+        // Username not found - show error
+        alert(`Username "${input}" not found in our database.\n\nTry searching by wallet address instead, or make sure the username is correct.`)
+      }
+    }
   }
 
   const handleAssignPlayer = (positionId: string, player: Player) => {

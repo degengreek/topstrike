@@ -134,18 +134,30 @@ async function main() {
         const existing = readExistingUsernames()
         const extracted = extractUsernames(jsonText)
 
-        console.log(`📦 Existing entries: ${Object.keys(existing).length}`)
+        console.log(`\n📦 Existing entries: ${Object.keys(existing).length}`)
         console.log(`📦 Extracted entries: ${Object.keys(extracted).length}`)
+        console.log(`\n🔍 Existing wallets:`, Object.keys(existing))
+        console.log(`🔍 Extracted wallets:`, Object.keys(extracted))
 
         let added = 0
         let updated = 0
 
+        console.log(`\n⚙️  Processing ${Object.keys(extracted).length} extracted entries...`)
         for (const [wallet, username] of Object.entries(extracted)) {
+          console.log(`\n  Checking: ${wallet}`)
+          console.log(`    - In existing? ${existing[wallet] !== undefined}`)
+
           if (existing[wallet]) {
+            console.log(`    - Existing username: ${existing[wallet]}`)
+            console.log(`    - New username: ${username}`)
+            console.log(`    - Match? ${existing[wallet] === username}`)
+
             if (existing[wallet] !== username) {
               console.log(`🔄 Updating: ${wallet} -> ${username} (was: ${existing[wallet]})`)
               existing[wallet] = username
               updated++
+            } else {
+              console.log(`    ⏭️  Skipped (already exists with same username)`)
             }
           } else {
             console.log(`✅ Adding: ${wallet} -> ${username}`)
@@ -153,6 +165,8 @@ async function main() {
             added++
           }
         }
+
+        console.log(`\n📊 Final counts: added=${added}, updated=${updated}`)
 
         if (added > 0 || updated > 0) {
           writeUsernames(existing)
