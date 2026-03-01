@@ -43,7 +43,7 @@ const authOptions: NextAuthOptions = {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: process.env.NODE_ENV === 'production' // true for HTTPS production
+        secure: false // Set to false for local development
       }
     }
   },
