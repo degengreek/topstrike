@@ -150,6 +150,30 @@
       "team": "Test/Placeholder",
       "verified": true,
       "notes": "Placeholder player"
+    },
+    "Reece James": {
+      "position": "Defender",
+      "team": "Chelsea",
+      "verified": true,
+      "notes": "Fixed wrong team (was Rotherham United)"
+    },
+    "Alex Scott": {
+      "position": "Midfielder",
+      "team": "Bournemouth",
+      "verified": true,
+      "notes": "Fixed wrong position and team (was Baseball player)"
+    },
+    "Mikkel Damsgaard": {
+      "position": "Midfielder",
+      "team": "Brentford",
+      "verified": true,
+      "notes": "Fixed position (was Left Wing)"
+    },
+    "Enzo Le Fee": {
+      "position": "Midfielder",
+      "team": "Sunderland",
+      "verified": true,
+      "notes": "Not found in TheSportsDB"
     }
   }
 }

@@ -10,6 +10,7 @@
     "build-db": "tsx scripts/build-player-database.ts",
     "build-db-upgraded": "tsx scripts/build-player-database-upgraded.ts",
     "build-db-quick": "tsx scripts/build-player-database-upgraded.ts",
+    "add-new": "tsx scripts/add-new-players.ts",
     "show-missing": "tsx scripts/show-missing-players.ts"
   },
   "dependencies": {

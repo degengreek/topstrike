@@ -126,9 +126,9 @@
   {
     "id": 14,
     "name": "Reece James",
-    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/d8ifhl1766332522.png",
+    "imageUrl": "/player-images/reecejames.png",
     "position": "Defender",
-    "team": "Rotherham United",
+    "team": "Chelsea",
     "sportsDbId": "34145645"
   },
   {
@@ -1313,6 +1313,146 @@
     "team": "Liverpool",
     "sportsDbId": "34164103",
     "lastAttempt": "2026-02-27T17:52:58.283Z",
+    "attempts": 1
+  },
+  {
+    "id": 157,
+    "name": "Junior Kroupi",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/7z9b4h1757017919.png",
+    "position": "Centre-Forward",
+    "team": "Bournemouth",
+    "sportsDbId": "34220320",
+    "lastAttempt": "2026-03-06T13:49:25.420Z",
+    "attempts": 1
+  },
+  {
+    "id": 158,
+    "name": "Chemsdine Talbi",
+    "imageUrl": "https://www.thesportsdb.com/images/media/player/cutout/j2sw9j1772021582.png",
+    "position": "Right Winger",
+    "team": "Sunderland",
+    "sportsDbId": "34252091",
+    "lastAttempt": "2026-03-06T13:49:41.764Z",
+    "attempts": 1
+  },
+  {
+    "id": 159,
+    "name": "Kevin Schade",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/1843hj1765972416.png",
+    "position": "Right Winger",
+    "team": "Brentford",
+    "sportsDbId": "34193533",
+    "lastAttempt": "2026-03-06T13:49:58.128Z",
+    "attempts": 1
+  },
+  {
+    "id": 160,
+    "name": "Alex Scott",
+    "imageUrl": "/player-images/alexscott.png",
+    "position": "Midfielder",
+    "team": "Bournemouth",
+    "sportsDbId": "34185590",
+    "lastAttempt": "2026-03-06T13:50:14.460Z",
+    "attempts": 1
+  },
+  {
+    "id": 161,
+    "name": "Mikkel Damsgaard",
+    "imageUrl": "/player-images/mikkeldamsgaard.png",
+    "position": "Midfielder",
+    "team": "Brentford",
+    "sportsDbId": "34172410",
+    "lastAttempt": "2026-03-06T13:50:30.850Z",
+    "attempts": 1
+  },
+  {
+    "id": 162,
+    "name": "Enzo Le Fee",
+    "imageUrl": "/player-images/enzolefee.png",
+    "position": "Midfielder",
+    "team": "Sunderland",
+    "sportsDbId": null,
+    "lastAttempt": "2026-03-06T13:50:47.193Z",
+    "attempts": 1
+  },
+  {
+    "id": 163,
+    "name": "Dwight McNeil",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/y2fuyb1756976922.png",
+    "position": "Left Wing",
+    "team": "Everton",
+    "sportsDbId": "34170018",
+    "lastAttempt": "2026-03-06T13:51:03.486Z",
+    "attempts": 1
+  },
+  {
+    "id": 164,
+    "name": "Sepp van den Berg",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/y74b161765971949.png",
+    "position": "Centre-Back",
+    "team": "Brentford",
+    "sportsDbId": "34168989",
+    "lastAttempt": "2026-03-06T13:51:19.777Z",
+    "attempts": 1
+  },
+  {
+    "id": 165,
+    "name": "Michael Kayode",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/g8ai7v1765972007.png",
+    "position": "Defender",
+    "team": "Brentford",
+    "sportsDbId": "34220167",
+    "lastAttempt": "2026-03-06T13:51:36.155Z",
+    "attempts": 1
+  },
+  {
+    "id": 166,
+    "name": "Marcos Senesi",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/ve65ug1757018745.png",
+    "position": "Centre-Back",
+    "team": "Bournemouth",
+    "sportsDbId": "34170459",
+    "lastAttempt": "2026-03-06T13:51:52.469Z",
+    "attempts": 1
+  },
+  {
+    "id": 167,
+    "name": "Dan Ballard",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/542r9u1757072659.png",
+    "position": "Centre-Back",
+    "team": "Sunderland",
+    "sportsDbId": "34178275",
+    "lastAttempt": "2026-03-06T13:52:08.810Z",
+    "attempts": 1
+  },
+  {
+    "id": 168,
+    "name": "Toti Gomes",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/ceggls1756975343.png",
+    "position": "Centre-Back",
+    "team": "Wolverhampton Wanderers",
+    "sportsDbId": "34195947",
+    "lastAttempt": "2026-03-06T13:52:25.094Z",
+    "attempts": 1
+  },
+  {
+    "id": 169,
+    "name": "Hugo Bueno",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/1thybn1755773104.png",
+    "position": "Left-Back",
+    "team": "Wolverhampton Wanderers",
+    "sportsDbId": "34201921",
+    "lastAttempt": "2026-03-06T13:52:41.373Z",
+    "attempts": 1
+  },
+  {
+    "id": 170,
+    "name": "James Tarkowski",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/12ufmm1756976434.png",
+    "position": "Centre-Back",
+    "team": "Everton",
+    "sportsDbId": "34147789",
+    "lastAttempt": "2026-03-06T13:52:57.709Z",
     "attempts": 1
   }
 ]

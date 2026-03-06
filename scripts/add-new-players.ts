@@ -1,12 +1,8 @@
 /**
- * UPGRADED Player Database Builder
+ * Add New Players Only Script
  *
- * Improvements:
- * - Incremental saves (progress not lost)
- * - Resume from where it left off
- * - Better rate limit handling
- * - Retry logic with exponential backoff
- * - Configurable delays
+ * Scans ONLY for players that are newer than what we have in the database.
+ * Fast and efficient - doesn't re-scan existing players.
  */
 
 import { ethers } from 'ethers'
@@ -19,10 +15,10 @@ const SPORTSDB_API_URL = 'https://www.thesportsdb.com/api/v1/json/3'
 
 // Configuration
 const CONFIG = {
-  delayBetweenRequests: 15000, // 15 seconds (increased from 10)
+  delayBetweenRequests: 15000, // 15 seconds
   maxRetries: 3,
   retryDelay: 5000,
-  saveInterval: 10, // Save every 10 players
+  saveInterval: 5, // Save every 5 new players
 }
 
 const CONTRACT_ABI = [
@@ -37,8 +33,8 @@ interface PlayerData {
   position: string | null
   team: string | null
   sportsDbId: string | null
-  lastAttempt?: string // ISO timestamp of last attempt
-  attempts?: number // Number of attempts
+  lastAttempt?: string
+  attempts?: number
 }
 
 /**
@@ -49,7 +45,7 @@ function sleep(ms: number): Promise<void> {
 }
 
 /**
- * Load existing database if it exists
+ * Load existing database
  */
 function loadExistingDatabase(outputPath: string): PlayerData[] {
   if (fs.existsSync(outputPath)) {
@@ -76,28 +72,26 @@ async function searchSportsDB(
   for (let attempt = 0; attempt < retries; attempt++) {
     try {
       if (attempt > 0) {
-        const delay = CONFIG.retryDelay * Math.pow(2, attempt - 1) // Exponential backoff
+        const delay = CONFIG.retryDelay * Math.pow(2, attempt - 1)
         console.log(`  ⏳ Retry ${attempt}/${retries} after ${delay}ms delay...`)
         await sleep(delay)
       }
 
-      // Try original name
       let url = `${SPORTSDB_API_URL}/searchplayers.php?p=${encodeURIComponent(playerName)}`
       let response = await fetch(url)
 
-      // Check if we got JSON (not HTML error page)
       const contentType = response.headers.get('content-type')
       if (!contentType || !contentType.includes('application/json')) {
         if (attempt === retries - 1) {
           console.log(`  ⚠️  Rate limited after ${retries} attempts`)
           return { imageUrl: null, position: null, team: null, sportsDbId: null }
         }
-        continue // Retry
+        continue
       }
 
       let data = await response.json()
 
-      // If not found and has apostrophe, try without
+      // Try without apostrophe if not found
       if ((!data.player || data.player.length === 0) && /[''`]/.test(playerName)) {
         const nameWithoutApostrophe = playerName.replace(/[''`]/g, '')
         console.log(`  🔄 Trying without apostrophe: ${nameWithoutApostrophe}`)
@@ -116,7 +110,6 @@ async function searchSportsDB(
         }
       }
 
-      // Not found but request succeeded
       return {
         imageUrl: null,
         position: null,
@@ -143,20 +136,25 @@ async function searchSportsDB(
 /**
  * Main function
  */
-async function buildPlayerDatabase() {
-  console.log('🚀 UPGRADED Player Database Builder\n')
+async function addNewPlayers() {
+  console.log('🚀 Add New Players Script\n')
   console.log('⚙️  Configuration:')
   console.log(`   Delay between requests: ${CONFIG.delayBetweenRequests}ms`)
   console.log(`   Max retries: ${CONFIG.maxRetries}`)
   console.log(`   Save interval: Every ${CONFIG.saveInterval} players\n`)
 
-  // Paths
   const outputPath = path.join(__dirname, '../public/player-database.json')
-  const tempPath = path.join(__dirname, '../public/player-database.temp.json')
 
   // Load existing database
   let playerDatabase = loadExistingDatabase(outputPath)
-  console.log(`📂 Loaded existing database: ${playerDatabase.length} players\n`)
+  console.log(`📂 Loaded existing database: ${playerDatabase.length} players`)
+
+  // Find highest player ID
+  const maxExistingId = playerDatabase.length > 0
+    ? Math.max(...playerDatabase.map(p => p.id))
+    : 0
+
+  console.log(`🔍 Highest existing player ID: ${maxExistingId}\n`)
 
   // Connect to contract
   const provider = new ethers.JsonRpcProvider(RPC_URL)
@@ -165,46 +163,33 @@ async function buildPlayerDatabase() {
   // Get total number of players
   const nextPlayerId = await contract.nextPlayerId()
   const totalPlayers = Number(nextPlayerId)
-  console.log(`📊 Total players in TopStrike: ${totalPlayers - 1}\n`)
-
-  // Build index of existing players
-  const existingPlayers = new Map<number, PlayerData>()
-  playerDatabase.forEach(p => existingPlayers.set(p.id, p))
-
-  // Find the highest player ID we already have
-  const maxExistingId = playerDatabase.length > 0
-    ? Math.max(...playerDatabase.map(p => p.id))
-    : 0
+  console.log(`📊 Total players in TopStrike contract: ${totalPlayers - 1}`)
 
   const startFromId = maxExistingId + 1
 
-  console.log(`🔍 Highest existing player ID: ${maxExistingId}`)
-  console.log(`🚀 Starting scan from player ID: ${startFromId}\n`)
-
-  // Check if there are any new players to scan
+  // Check if there are new players
   if (startFromId >= totalPlayers) {
-    console.log('✅ No new players found! Database is already up to date.')
+    console.log('\n✅ No new players found! Database is already up to date.')
     console.log(`   Current players in database: ${maxExistingId}`)
     console.log(`   Total players in contract: ${totalPlayers - 1}`)
     return
   }
 
-  const newPlayersToScan = totalPlayers - startFromId
-  console.log(`📋 Found ${newPlayersToScan} new player(s) to add\n`)
+  const newPlayersCount = totalPlayers - startFromId
+  console.log(`\n🆕 Found ${newPlayersCount} new player(s) to add!`)
+  console.log(`📋 Scanning player IDs ${startFromId} to ${totalPlayers - 1}\n`)
 
-  let newPlayersFound = 0
-  let updatedPlayers = 0
+  let addedCount = 0
 
-  // Fetch each player (only NEW players after our highest ID)
+  // Fetch only NEW players
   for (let id = startFromId; id < totalPlayers; id++) {
     try {
-      // Get player from contract
       const playerData = await contract.players(id)
       const name = playerData.name
 
-      console.log(`[${id}/${totalPlayers - 1}] ${name} - 🆕 NEW PLAYER`)
+      console.log(`[${id}/${totalPlayers - 1}] ${name} - 🆕 NEW`)
 
-      // Delay before API call to avoid rate limiting
+      // Delay to avoid rate limiting
       await sleep(CONFIG.delayBetweenRequests)
 
       // Search TheSportsDB
@@ -222,9 +207,8 @@ async function buildPlayerDatabase() {
         attempts: 1
       }
 
-      // Add to database
       playerDatabase.push(playerEntry)
-      newPlayersFound++
+      addedCount++
 
       if (sportsData.imageUrl) {
         console.log(`  ✅ Found: ${sportsData.position || 'Unknown'} - ${sportsData.team || 'Unknown team'}`)
@@ -233,9 +217,10 @@ async function buildPlayerDatabase() {
       }
 
       // Incremental save
-      if (id % CONFIG.saveInterval === 0) {
-        saveDatabase(tempPath, playerDatabase)
-        console.log(`  💾 Progress saved (${id}/${totalPlayers - 1})`)
+      if (addedCount % CONFIG.saveInterval === 0) {
+        playerDatabase.sort((a, b) => a.id - b.id)
+        saveDatabase(outputPath, playerDatabase)
+        console.log(`  💾 Progress saved (${addedCount}/${newPlayersCount} new players added)`)
       }
 
     } catch (error) {
@@ -243,30 +228,22 @@ async function buildPlayerDatabase() {
     }
   }
 
-  // Sort by ID before final save
-  playerDatabase.sort((a, b) => a.id - b.id)
-
   // Final save
+  playerDatabase.sort((a, b) => a.id - b.id)
   saveDatabase(outputPath, playerDatabase)
-
-  // Remove temp file
-  if (fs.existsSync(tempPath)) {
-    fs.unlinkSync(tempPath)
-  }
 
   // Stats
   const foundCount = playerDatabase.filter(p => p.imageUrl).length
   const notFoundCount = playerDatabase.filter(p => !p.imageUrl).length
 
-  console.log(`\n✅ Database build complete!`)
+  console.log(`\n✅ New players added successfully!`)
   console.log(`📁 Saved to: ${outputPath}`)
-  console.log(`\n📊 Final Stats:`)
-  console.log(`   Total players: ${playerDatabase.length}`)
+  console.log(`\n📊 Stats:`)
+  console.log(`   Total players in database: ${playerDatabase.length}`)
+  console.log(`   New players added this run: ${addedCount}`)
   console.log(`   Found on SportsDB: ${foundCount} (${Math.round(foundCount / playerDatabase.length * 100)}%)`)
   console.log(`   Not found: ${notFoundCount} (${Math.round(notFoundCount / playerDatabase.length * 100)}%)`)
-  console.log(`   New players found this run: ${newPlayersFound}`)
-  console.log(`   Updated players: ${updatedPlayers}`)
 }
 
 // Run the script
-buildPlayerDatabase().catch(console.error)
+addNewPlayers().catch(console.error)
