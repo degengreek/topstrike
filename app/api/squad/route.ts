@@ -6,7 +6,7 @@
 
 import { getServerSession } from 'next-auth'
 import { supabaseAdmin } from '@/lib/supabase'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 
 // GET - Load user's squad
 export async function GET(req: Request) {
