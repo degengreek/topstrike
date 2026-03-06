@@ -46,17 +46,25 @@ async function fetchPlayerScore(playerId, playerName, index, total) {
   try {
     const url = `https://play.topstrike.io/api/fapi-server/player-match-history?tokenId=${playerId}&limit=1`
 
+    // Add timeout to prevent hanging
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 10000) // 10 second timeout
+
     const response = await fetch(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
         'Accept': 'application/json',
         'Referer': 'https://play.topstrike.io/'
-      }
+      },
+      signal: controller.signal
     })
+
+    clearTimeout(timeout)
 
     if (!response.ok) {
       // Player doesn't exist or no data - skip silently
       if (response.status === 404 || response.status === 400) {
+        if (index % 20 === 0) console.log(`  [${index}/${total}] ⏭️  Skipping...`)
         return null
       }
       throw new Error(`API returned ${response.status}`)
@@ -88,6 +96,10 @@ async function fetchPlayerScore(playerId, playerName, index, total) {
       match_state: match.matchState
     }
   } catch (error) {
+    // Handle timeout or other errors
+    if (error.name === 'AbortError') {
+      if (index % 20 === 0) console.log(`  [${index}/${total}] ⏱️  Timeout, skipping...`)
+    }
     // Skip players that error out (likely don't exist)
     return null
   }
