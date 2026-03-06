@@ -30,16 +30,20 @@ async function fetchPlayerScoreFromTopStrike(playerId: string, playerName: strin
   try {
     const url = `https://play.topstrike.io/api/fapi-server/player-match-history?tokenId=${playerId}&limit=1`
 
+    console.log(`🔍 Fetching player ${playerId} (${playerName})...`)
     const response = await fetch(url)
 
     if (!response.ok) {
+      console.error(`❌ API returned ${response.status} for player ${playerId}`)
       throw new Error(`API returned ${response.status}`)
     }
 
     const data: TopStrikeMatch[] = await response.json()
+    console.log(`📦 Response for ${playerName}:`, data)
 
     // No match history
     if (!data || data.length === 0) {
+      console.log(`⚠️ No match history for ${playerName}`)
       return {
         player_id: playerId,
         player_name: playerName,
@@ -52,6 +56,7 @@ async function fetchPlayerScoreFromTopStrike(playerId: string, playerName: strin
 
     // Get most recent match
     const recentMatch = data[0]
+    console.log(`✅ ${playerName}: ${recentMatch.totalScore} points vs ${recentMatch.opponentName}`)
 
     return {
       player_id: playerId,
@@ -62,7 +67,7 @@ async function fetchPlayerScoreFromTopStrike(playerId: string, playerName: strin
       match_state: recentMatch.matchState
     }
   } catch (error) {
-    console.error(`Failed to fetch score for player ${playerId}:`, error)
+    console.error(`❌ Failed to fetch score for player ${playerId} (${playerName}):`, error)
     // Return 0 score on error
     return {
       player_id: playerId,
