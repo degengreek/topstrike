@@ -76,8 +76,25 @@ async function fetchPlayerScore(playerId, playerName, index, total) {
     // Get most recent match
     const match = data[0]
 
+    // Check if match is within last 3 days
+    const matchDate = new Date(match.matchDate)
+    const threeDaysAgo = new Date()
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3)
+
+    // If match is older than 3 days, don't count the score
+    if (matchDate < threeDaysAgo) {
+      return {
+        player_id: playerId,
+        player_name: playerName,
+        most_recent_score: 0, // Old match, set score to 0
+        match_date: null,
+        match_opponent: null,
+        match_state: null
+      }
+    }
+
     if (index % 10 === 0) {
-      console.log(`  [${index}/${total}] ✅ Player ${playerId}: ${match.totalScore} pts`)
+      console.log(`  [${index}/${total}] ✅ Player ${playerId}: ${match.totalScore} pts (${match.matchDate})`)
     }
 
     return {
