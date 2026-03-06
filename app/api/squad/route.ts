@@ -6,35 +6,7 @@
 
 import { getServerSession } from 'next-auth'
 import { supabaseAdmin } from '@/lib/supabase'
-import { NextAuthOptions } from 'next-auth'
-import TwitterProvider from 'next-auth/providers/twitter'
-
-// Re-export auth options for getServerSession
-const authOptions: NextAuthOptions = {
-  providers: [
-    TwitterProvider({
-      clientId: process.env.TWITTER_CLIENT_ID!,
-      clientSecret: process.env.TWITTER_CLIENT_SECRET!,
-      version: "2.0",
-      authorization: {
-        url: "https://twitter.com/i/oauth2/authorize",
-        params: {
-          scope: "users.read tweet.read offline.access",
-        },
-      },
-    })
-  ],
-  callbacks: {
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.sub as string
-        session.user.name = token.name as string
-      }
-      return session
-    },
-  },
-  secret: process.env.NEXTAUTH_SECRET,
-}
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 
 // GET - Load user's squad
 export async function GET(req: Request) {

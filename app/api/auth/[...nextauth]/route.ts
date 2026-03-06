@@ -2,7 +2,7 @@ import NextAuth, { NextAuthOptions } from "next-auth"
 import TwitterProvider from "next-auth/providers/twitter"
 import { supabaseAdmin } from "@/lib/supabase"
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   debug: true, // Enable debug mode to see detailed logs
   providers: [
     TwitterProvider({
@@ -46,20 +46,21 @@ const authOptions: NextAuthOptions = {
       }
       return true
     },
-    async session({ session, token }) {
-      // Add Twitter ID to session for wallet linking
-      if (session.user) {
-        session.user.id = token.sub as string
-        session.user.name = token.name as string
-      }
-      return session
-    },
     async jwt({ token, account, profile }) {
-      // Store Twitter username in token
+      // Store Twitter ID and username in token on first sign-in
       if (account && profile) {
+        token.twitter_id = account.providerAccountId // Store the actual Twitter ID
         token.username = (profile as any).data?.username || profile.name
       }
       return token
+    },
+    async session({ session, token }) {
+      // Add Twitter ID to session for wallet linking
+      if (session.user) {
+        session.user.id = (token.twitter_id as string) || (token.sub as string) // Use twitter_id if available
+        session.user.name = token.name as string
+      }
+      return session
     }
   },
   pages: {
