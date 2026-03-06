@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { formations, FormationType } from '@/lib/formations'
 import { getCurrentGameweek, isSquadLocked, getTimeUntilChange, formatTimeRemaining, type Gameweek } from '@/lib/gameweek'
+import { fetchPlayerScores, getStoredScores, getPlayerScore, type PlayerScore } from '@/lib/scores'
 
 interface Player {
   id: string
@@ -31,6 +32,24 @@ const positionCompatibility: Record<string, string[]> = {
 function canPlayInPosition(playerPosition: string, formationPosition: string): boolean {
   const compatiblePositions = positionCompatibility[playerPosition] || []
   return compatiblePositions.includes(formationPosition)
+}
+
+// Score Circle Component
+function ScoreCircle({ score }: { score: number }) {
+  return (
+    <div
+      className={`
+        w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold
+        ${score === 0
+          ? 'bg-gray-500 text-gray-300'  // Grey for no score
+          : 'bg-white text-gray-900'      // White with black text for scores
+        }
+      `}
+      title={score === 0 ? 'No recent match' : `${score} points`}
+    >
+      {score}
+    </div>
+  )
 }
 
 interface SquadBuilderTabProps {
@@ -64,6 +83,10 @@ export default function SquadBuilderTab({
   const [searchQuery, setSearchQuery] = useState('')
   const [positionFilter, setPositionFilter] = useState('All')
 
+  // Scores state
+  const [scores, setScores] = useState<PlayerScore[]>([])
+  const [fetchingScores, setFetchingScores] = useState(false)
+
   const currentFormation = formations[formation]
 
   // Fetch current gameweek on mount
@@ -74,6 +97,11 @@ export default function SquadBuilderTab({
         setIsLocked(isSquadLocked(gw))
       }
     })
+  }, [])
+
+  // Load stored scores on mount
+  useEffect(() => {
+    getStoredScores().then(setScores)
   }, [])
 
   // Update countdown every minute
@@ -157,6 +185,29 @@ export default function SquadBuilderTab({
     }
   }
 
+  const handleRefreshScores = async () => {
+    setFetchingScores(true)
+    try {
+      // Prepare player data for API
+      const playerIds = players.map(p => ({
+        id: p.id,
+        name: p.name
+      }))
+
+      await fetchPlayerScores(playerIds)
+
+      // Reload scores from database
+      const updatedScores = await getStoredScores()
+      setScores(updatedScores)
+
+      alert(`✅ Successfully fetched scores for ${players.length} players!`)
+    } catch (error: any) {
+      alert(`❌ Failed to fetch scores: ${error.message}`)
+    } finally {
+      setFetchingScores(false)
+    }
+  }
+
   return (
     <div className="flex gap-6 min-h-[calc(100vh-200px)]">
       {/* Left Sidebar - Player List */}
@@ -217,9 +268,12 @@ export default function SquadBuilderTab({
                   <p className="text-xs text-gray-400">{player.team}</p>
                 </div>
 
-                <span className="text-xs font-semibold text-green-400 bg-green-400/10 px-2 py-1 rounded">
-                  {player.position}
-                </span>
+                <div className="flex items-center gap-2">
+                  <ScoreCircle score={getPlayerScore(scores, player.id)} />
+                  <span className="text-xs font-semibold text-green-400 bg-green-400/10 px-2 py-1 rounded">
+                    {player.position}
+                  </span>
+                </div>
               </div>
             </div>
           ))}
@@ -351,6 +405,10 @@ export default function SquadBuilderTab({
                           </span>
                         </div>
                       </div>
+                      {/* Score Circle Overlay */}
+                      <div className="absolute -top-2 -left-2">
+                        <ScoreCircle score={getPlayerScore(scores, assignedPlayers.get(position.id)!.id)} />
+                      </div>
                       {!isLocked && (
                         <button
                           onClick={() => onRemovePlayer(position.id)}
@@ -399,6 +457,24 @@ export default function SquadBuilderTab({
             ) : (
               <>
                 💾 Save Team
+              </>
+            )}
+          </button>
+
+          {/* Refresh Scores Button */}
+          <button
+            onClick={handleRefreshScores}
+            disabled={fetchingScores}
+            className="w-full px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-500 hover:to-indigo-500 transition-all font-semibold text-sm shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            {fetchingScores ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                Fetching Scores...
+              </>
+            ) : (
+              <>
+                📊 Refresh Scores
               </>
             )}
           </button>
