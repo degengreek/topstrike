@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { formations, FormationType } from '@/lib/formations'
+import { getCurrentGameweek, isSquadLocked, getTimeUntilChange, formatTimeRemaining, type Gameweek } from '@/lib/gameweek'
 
 interface Player {
   id: string
@@ -40,6 +41,7 @@ interface SquadBuilderTabProps {
   onClearAll: () => void
   formation: FormationType
   onFormationChange: (formation: FormationType) => void
+  onSaveSquad: () => Promise<void>
 }
 
 export default function SquadBuilderTab({
@@ -49,13 +51,46 @@ export default function SquadBuilderTab({
   onRemovePlayer,
   onClearAll,
   formation,
-  onFormationChange
+  onFormationChange,
+  onSaveSquad
 }: SquadBuilderTabProps) {
   const [draggedPlayer, setDraggedPlayer] = useState<Player | null>(null)
+  const [saving, setSaving] = useState(false)
+  const [saveSuccess, setSaveSuccess] = useState(false)
+  const [saveError, setSaveError] = useState('')
+  const [gameweek, setGameweek] = useState<Gameweek | null>(null)
+  const [countdown, setCountdown] = useState('')
+  const [isLocked, setIsLocked] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [positionFilter, setPositionFilter] = useState('All')
 
   const currentFormation = formations[formation]
+
+  // Fetch current gameweek on mount
+  useEffect(() => {
+    getCurrentGameweek().then(gw => {
+      setGameweek(gw)
+      if (gw) {
+        setIsLocked(isSquadLocked(gw))
+      }
+    })
+  }, [])
+
+  // Update countdown every minute
+  useEffect(() => {
+    if (!gameweek) return
+
+    const updateCountdown = () => {
+      const timeData = getTimeUntilChange(gameweek)
+      setIsLocked(timeData.isLocked)
+      setCountdown(`${timeData.label} ${formatTimeRemaining(timeData.timeRemaining)}`)
+    }
+
+    updateCountdown() // Initial update
+    const interval = setInterval(updateCountdown, 60000) // Update every minute
+
+    return () => clearInterval(interval)
+  }, [gameweek])
 
   // Get list of assigned player IDs
   const assignedPlayerIds = new Set(
@@ -76,6 +111,7 @@ export default function SquadBuilderTab({
   const uniquePositions = ['All', ...Array.from(new Set(players.map(p => p.position)))]
 
   const handleDragStart = (player: Player) => {
+    if (isLocked) return // Disable drag when locked
     setDraggedPlayer(player)
   }
 
@@ -84,7 +120,7 @@ export default function SquadBuilderTab({
   }
 
   const handleDrop = (positionId: string) => {
-    if (!draggedPlayer) return
+    if (!draggedPlayer || isLocked) return // Disable drop when locked
 
     // Get the formation position
     const formationPos = currentFormation.positions.find(p => p.id === positionId)
@@ -99,6 +135,26 @@ export default function SquadBuilderTab({
 
     onAssignPlayer(positionId, draggedPlayer)
     setDraggedPlayer(null)
+  }
+
+  const handleSaveSquad = async () => {
+    setSaving(true)
+    setSaveError('')
+    setSaveSuccess(false)
+
+    try {
+      await onSaveSquad()
+      setSaveSuccess(true)
+
+      // Hide success message after 3 seconds
+      setTimeout(() => {
+        setSaveSuccess(false)
+      }, 3000)
+    } catch (error: any) {
+      setSaveError(error.message || 'Failed to save squad')
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (
@@ -132,9 +188,13 @@ export default function SquadBuilderTab({
           {filteredPlayers.map((player) => (
             <div
               key={player.id}
-              draggable
+              draggable={!isLocked}
               onDragStart={() => handleDragStart(player)}
-              className="bg-gray-700 rounded-lg p-3 cursor-move hover:bg-gray-600 transition-colors border border-gray-600 hover:border-green-500"
+              className={`bg-gray-700 rounded-lg p-3 transition-colors border border-gray-600 ${
+                isLocked
+                  ? 'opacity-50 cursor-not-allowed'
+                  : 'cursor-move hover:bg-gray-600 hover:border-green-500'
+              }`}
             >
               <div className="flex items-center gap-3">
                 {/* Player Image */}
@@ -174,6 +234,27 @@ export default function SquadBuilderTab({
 
       {/* Right Side - Formation */}
       <div className="flex-1 bg-gray-800/50 rounded-xl p-6 flex flex-col sticky top-4 self-start">
+        {/* Lock/Unlock Status Banner */}
+        {gameweek && (
+          <div className={`mb-4 rounded-lg p-3 text-center font-semibold ${
+            isLocked
+              ? 'bg-red-500/20 border border-red-500/50 text-red-400'
+              : 'bg-blue-500/20 border border-blue-500/50 text-blue-400'
+          }`}>
+            {isLocked ? (
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-xl">🔒</span>
+                <span>{countdown}</span>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-xl">⏰</span>
+                <span>{countdown}</span>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Header with Formation Selector and Clear All */}
         <div className="mb-4 flex items-center justify-between">
           <div>
@@ -183,7 +264,8 @@ export default function SquadBuilderTab({
             <select
               value={formation}
               onChange={(e) => onFormationChange(e.target.value as FormationType)}
-              className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+              disabled={isLocked}
+              className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <option value="4-3-3">4-3-3</option>
               <option value="4-4-2">4-4-2</option>
@@ -196,7 +278,8 @@ export default function SquadBuilderTab({
           </div>
           <button
             onClick={onClearAll}
-            className="px-4 py-2 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 transition-colors font-medium"
+            disabled={isLocked}
+            className="px-4 py-2 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Clear All
           </button>
@@ -268,12 +351,14 @@ export default function SquadBuilderTab({
                           </span>
                         </div>
                       </div>
-                      <button
-                        onClick={() => onRemovePlayer(position.id)}
-                        className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 rounded-full text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center hover:bg-red-600"
-                      >
-                        ×
-                      </button>
+                      {!isLocked && (
+                        <button
+                          onClick={() => onRemovePlayer(position.id)}
+                          className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 rounded-full text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center hover:bg-red-600"
+                        >
+                          ×
+                        </button>
+                      )}
                     </div>
                   ) : (
                     // Empty Slot
@@ -297,6 +382,46 @@ export default function SquadBuilderTab({
           <span className="text-gray-400">
             Players: {assignedPlayers.size} / {currentFormation.positions.length}
           </span>
+        </div>
+
+        {/* Save Team Button */}
+        <div className="mt-6 space-y-3">
+          <button
+            onClick={handleSaveSquad}
+            disabled={saving || isLocked}
+            className="w-full px-4 py-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg hover:from-green-500 hover:to-emerald-500 transition-all font-semibold text-sm shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            {saving ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                Saving...
+              </>
+            ) : (
+              <>
+                💾 Save Team
+              </>
+            )}
+          </button>
+
+          {/* Success Message */}
+          {saveSuccess && (
+            <div className="bg-green-500/20 border border-green-500/50 rounded-lg p-3 text-center animate-fade-in">
+              <p className="text-green-400 font-semibold flex items-center justify-center gap-2">
+                <span className="text-xl">✅</span>
+                Squad Saved!
+              </p>
+              <p className="text-xs text-green-300 mt-1">
+                Saved at {new Date().toLocaleTimeString()}
+              </p>
+            </div>
+          )}
+
+          {/* Error Message */}
+          {saveError && (
+            <div className="bg-red-500/20 border border-red-500/50 rounded-lg p-3 text-center">
+              <p className="text-red-400 font-semibold">❌ {saveError}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

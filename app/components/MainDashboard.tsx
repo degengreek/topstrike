@@ -8,7 +8,7 @@ import { getPlayerByName } from '@/lib/player-database'
 import { normalizePosition } from '@/lib/sportsdb'
 import { getTeamOverride } from '@/lib/team-overrides'
 import { getVerifiedPlayerData } from '@/lib/verified-players'
-import { loadSquad, saveSquad, clearSavedSquad } from '@/lib/squad-storage'
+import { loadSquad, saveDraftToLocalStorage, saveSquadToSupabase, clearSavedSquad } from '@/lib/squad-storage'
 import { saveWalletLink, getWalletLink } from '@/lib/wallet-storage'
 import { getTopStrikeUsername, getWalletByUsername } from '@/lib/topstrike-usernames'
 import { formations, FormationType } from '@/lib/formations'
@@ -108,12 +108,10 @@ export default function MainDashboard() {
     }
   }, [linkedWallet, players])
 
-  // Auto-save squad on changes
+  // Auto-save draft to localStorage on changes (not Supabase)
   useEffect(() => {
     if (linkedWallet && assignedPlayers.size > 0) {
-      saveSquad(linkedWallet, formation, assignedPlayers).catch(err => {
-        console.error('Auto-save failed:', err)
-      })
+      saveDraftToLocalStorage(linkedWallet, formation, assignedPlayers)
     }
   }, [linkedWallet, formation, assignedPlayers])
 
@@ -324,6 +322,13 @@ export default function MainDashboard() {
     setAssignedPlayers(new Map())
   }
 
+  const handleSaveSquad = async () => {
+    const result = await saveSquadToSupabase(formation, assignedPlayers)
+    if (!result.success) {
+      throw new Error(result.error)
+    }
+  }
+
   const playerTeamNames = Array.from(new Set(players.map(p => p.team).filter(t => t && t !== 'Unknown'))) as string[]
 
   return (
@@ -389,6 +394,7 @@ export default function MainDashboard() {
                 onClearAll={handleClearAll}
                 formation={formation}
                 onFormationChange={handleFormationChange}
+                onSaveSquad={handleSaveSquad}
               />
             )}
 

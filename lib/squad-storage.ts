@@ -18,13 +18,13 @@ export interface SavedSquad {
 const STORAGE_KEY = 'topstrike_saved_squad'
 
 /**
- * Save current squad to Supabase + localStorage backup
+ * Save draft to localStorage only (auto-save for drafts)
  */
-export const saveSquad = async (
+export const saveDraftToLocalStorage = (
   walletAddress: string,
   formation: string,
   assignedPlayers: Map<string, any>
-): Promise<void> => {
+): void => {
   try {
     // Convert Map to simple object for storage
     const playersObj: Record<string, any> = {}
@@ -44,31 +44,51 @@ export const saveSquad = async (
       savedAt: new Date().toISOString()
     }
 
-    // Save to localStorage immediately (instant feedback)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(squadData))
-    console.log('✅ Squad saved to localStorage')
-
-    // Also save to Supabase (async, for persistence)
-    try {
-      const response = await fetch('/api/squad', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          formation,
-          players: playersObj
-        })
-      })
-
-      if (response.ok) {
-        console.log('✅ Squad saved to Supabase')
-      } else {
-        console.warn('⚠️ Failed to save squad to Supabase (localStorage still works)')
-      }
-    } catch (apiError) {
-      console.warn('⚠️ Supabase save failed, using localStorage only:', apiError)
-    }
+    console.log('💾 Draft saved to localStorage')
   } catch (error) {
-    console.error('Failed to save squad:', error)
+    console.error('Failed to save draft:', error)
+  }
+}
+
+/**
+ * Save squad to Supabase (manual save button)
+ */
+export const saveSquadToSupabase = async (
+  formation: string,
+  assignedPlayers: Map<string, any>
+): Promise<{ success: boolean; error?: string }> => {
+  try {
+    // Convert Map to simple object
+    const playersObj: Record<string, any> = {}
+    assignedPlayers.forEach((player, positionId) => {
+      playersObj[positionId] = {
+        id: player.id,
+        name: player.name,
+        position: player.position,
+        team: player.team
+      }
+    })
+
+    const response = await fetch('/api/squad', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        formation,
+        players: playersObj
+      })
+    })
+
+    if (response.ok) {
+      console.log('✅ Squad saved to Supabase')
+      return { success: true }
+    } else {
+      const data = await response.json()
+      return { success: false, error: data.error || 'Failed to save squad' }
+    }
+  } catch (error: any) {
+    console.error('Failed to save squad to Supabase:', error)
+    return { success: false, error: error.message }
   }
 }
 
