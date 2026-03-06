@@ -76,3 +76,19 @@ export function getTopStrikeUsername(walletAddress: string): string | null {
   const normalizedAddress = walletAddress.toLowerCase()
   return TOPSTRIKE_USERNAMES[normalizedAddress] || null
 }
+
+/**
+ * Get wallet address for a TopStrike username (reverse lookup)
+ * Returns null if no mapping exists
+ */
+export function getWalletByUsername(username: string): string | null {
+  const normalizedUsername = username.toLowerCase()
+
+  for (const [wallet, user] of Object.entries(TOPSTRIKE_USERNAMES)) {
+    if (user.toLowerCase() === normalizedUsername) {
+      return wallet
+    }
+  }
+
+  return null
+}
