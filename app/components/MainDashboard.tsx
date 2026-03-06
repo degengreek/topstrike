@@ -62,23 +62,29 @@ export default function MainDashboard() {
 
   // Check for linked wallet on session change or mount
   useEffect(() => {
-    // Check localStorage for saved wallet (even without Twitter login)
-    const savedWallet = localStorage.getItem('topstrike_wallet')
-    if (savedWallet) {
-      setLinkedWallet(savedWallet)
-      fetchPortfolio(savedWallet, true)
-      return
-    }
-
-    // Check Twitter-linked wallet
+    // If user is signed in, fetch wallet from Supabase
     if (session?.user?.id) {
-      const userLinkedWallet = getWalletLink(session.user.id)
-      if (userLinkedWallet) {
-        setLinkedWallet(userLinkedWallet)
-        fetchPortfolio(userLinkedWallet, true)
-      } else {
-        // User signed in but no wallet linked - show link modal
-        setShowLinkWalletModal(true)
+      fetch('/api/wallet-link')
+        .then(res => res.json())
+        .then(data => {
+          if (data.walletAddress) {
+            setLinkedWallet(data.walletAddress)
+            fetchPortfolio(data.walletAddress, true)
+          } else {
+            // User signed in but no wallet linked - show link modal
+            setShowLinkWalletModal(true)
+          }
+        })
+        .catch(err => {
+          console.error('Failed to load wallet:', err)
+          setShowLinkWalletModal(true)
+        })
+    } else {
+      // Not signed in - check localStorage for manual wallet
+      const savedWallet = localStorage.getItem('topstrike_wallet')
+      if (savedWallet) {
+        setLinkedWallet(savedWallet)
+        fetchPortfolio(savedWallet, true)
       }
     }
   }, [session])
@@ -231,12 +237,8 @@ export default function MainDashboard() {
         // Save to localStorage (persists even without Twitter login)
         localStorage.setItem('topstrike_wallet', address)
 
-        // Also link wallet to Twitter if signed in
-        if (session?.user?.id) {
-          // Check if we have a TopStrike username mapping for this wallet
-          const topStrikeUsername = getTopStrikeUsername(address)
-          saveWalletLink(session.user.id, session.user.name || '', address, topStrikeUsername || undefined)
-        }
+        // Wallet is already linked via API when user clicks "Link Wallet"
+        // No need to save to localStorage here
       } else {
         // This is a searched wallet (for viewing only)
         setSearchedWallet(address)
@@ -252,10 +254,28 @@ export default function MainDashboard() {
     }
   }
 
-  const handleLinkWallet = (walletAddress: string) => {
-    setLinkedWallet(walletAddress)
-    setShowLinkWalletModal(false)
-    fetchPortfolio(walletAddress, true)
+  const handleLinkWallet = async (walletAddress: string) => {
+    try {
+      // Save to Supabase via API
+      const response = await fetch('/api/wallet-link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ walletAddress })
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to link wallet')
+      }
+
+      console.log('✅ Wallet linked to Supabase')
+
+      setLinkedWallet(walletAddress)
+      setShowLinkWalletModal(false)
+      fetchPortfolio(walletAddress, true)
+    } catch (error) {
+      console.error('Error linking wallet:', error)
+      alert('Failed to link wallet. Please try again.')
+    }
   }
 
   const handleSearchWallet = () => {
