@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       fetched: results.length,
-      errors: errors.length,
+      errorCount: errors.length,
       results,
       errors
     })
