@@ -11,6 +11,10 @@
 
 require('dotenv').config({ path: '.env.local' })
 const { createClient } = require('@supabase/supabase-js')
+const { exec } = require('child_process')
+const { promisify } = require('util')
+
+const execAsync = promisify(exec)
 
 // Supabase setup
 const supabase = createClient(
@@ -20,7 +24,7 @@ const supabase = createClient(
 
 // Configuration
 const FETCH_INTERVAL = 60 * 60 * 1000 // 1 hour in milliseconds
-const MAX_PLAYER_ID = 200 // Adjust this based on total players in TopStrike
+const MAX_PLAYER_ID = 200 // Fetch all players
 const START_PLAYER_ID = 1
 
 /**
@@ -46,31 +50,23 @@ async function fetchPlayerScore(playerId, playerName, index, total) {
   try {
     const url = `https://play.topstrike.io/api/fapi-server/player-match-history?tokenId=${playerId}&limit=1`
 
-    // Add timeout to prevent hanging
-    const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), 10000) // 10 second timeout
+    // Use curl instead of fetch to bypass Cloudflare
+    const curlCommand = `curl -s "${url}" -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" -H "Accept: application/json" -H "Referer: https://play.topstrike.io/"`
 
-    const response = await fetch(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        'Accept': 'application/json',
-        'Referer': 'https://play.topstrike.io/'
-      },
-      signal: controller.signal
-    })
+    const { stdout, stderr } = await execAsync(curlCommand, { timeout: 10000 })
 
-    clearTimeout(timeout)
-
-    if (!response.ok) {
-      // Player doesn't exist or no data - skip silently
-      if (response.status === 404 || response.status === 400) {
-        if (index % 20 === 0) console.log(`  [${index}/${total}] ⏭️  Skipping...`)
-        return null
-      }
-      throw new Error(`API returned ${response.status}`)
+    if (stderr) {
+      console.log(`  → curl error: ${stderr}`)
+      return null
     }
 
-    const data = await response.json()
+    let data
+    try {
+      data = JSON.parse(stdout)
+    } catch (e) {
+      // Not valid JSON - probably Cloudflare or player doesn't exist
+      return null
+    }
 
     // No match history - skip
     if (!data || data.length === 0) {
@@ -80,16 +76,13 @@ async function fetchPlayerScore(playerId, playerName, index, total) {
     // Get most recent match
     const match = data[0]
 
-    // Extract actual player name if available
-    const actualPlayerName = match.playerTeamName ? `${playerName} (${match.playerTeamName})` : playerName
-
     if (index % 10 === 0) {
       console.log(`  [${index}/${total}] ✅ Player ${playerId}: ${match.totalScore} pts`)
     }
 
     return {
       player_id: playerId,
-      player_name: actualPlayerName,
+      player_name: playerName, // Keep simple "Player X" - app will use its own name mapping
       most_recent_score: match.totalScore,
       match_date: match.matchDate,
       match_opponent: match.opponentName,
