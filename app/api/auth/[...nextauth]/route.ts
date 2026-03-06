@@ -1,5 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth"
 import TwitterProvider from "next-auth/providers/twitter"
+import { supabaseAdmin } from "@/lib/supabase"
 
 const authOptions: NextAuthOptions = {
   debug: true, // Enable debug mode to see detailed logs
@@ -17,6 +18,34 @@ const authOptions: NextAuthOptions = {
     })
   ],
   callbacks: {
+    async signIn({ user, account, profile }) {
+      // Save/update user in Supabase on sign in
+      if (account?.provider === 'twitter' && profile) {
+        try {
+          const twitterProfile = (profile as any).data
+
+          const { error } = await supabaseAdmin
+            .from('users')
+            .upsert({
+              twitter_id: account.providerAccountId,
+              twitter_username: twitterProfile?.username || user.name || 'Unknown',
+              twitter_handle: twitterProfile?.name || user.name,
+              twitter_avatar_url: twitterProfile?.profile_image_url || user.image,
+            }, {
+              onConflict: 'twitter_id'
+            })
+
+          if (error) {
+            console.error('Error saving user to Supabase:', error)
+          } else {
+            console.log('✅ User saved to Supabase:', twitterProfile?.username)
+          }
+        } catch (err) {
+          console.error('Exception saving user:', err)
+        }
+      }
+      return true
+    },
     async session({ session, token }) {
       // Add Twitter ID to session for wallet linking
       if (session.user) {

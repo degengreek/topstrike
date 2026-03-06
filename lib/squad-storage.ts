@@ -1,6 +1,6 @@
 /**
  * Squad Storage Utility
- * Saves and loads squad formations to/from localStorage
+ * Saves and loads squad formations to/from Supabase + localStorage backup
  */
 
 export interface SavedSquad {
@@ -18,13 +18,13 @@ export interface SavedSquad {
 const STORAGE_KEY = 'topstrike_saved_squad'
 
 /**
- * Save current squad to localStorage
+ * Save current squad to Supabase + localStorage backup
  */
-export const saveSquad = (
+export const saveSquad = async (
   walletAddress: string,
   formation: string,
   assignedPlayers: Map<string, any>
-): void => {
+): Promise<void> => {
   try {
     // Convert Map to simple object for storage
     const playersObj: Record<string, any> = {}
@@ -44,18 +44,59 @@ export const saveSquad = (
       savedAt: new Date().toISOString()
     }
 
+    // Save to localStorage immediately (instant feedback)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(squadData))
     console.log('✅ Squad saved to localStorage')
+
+    // Also save to Supabase (async, for persistence)
+    try {
+      const response = await fetch('/api/squad', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formation,
+          players: playersObj
+        })
+      })
+
+      if (response.ok) {
+        console.log('✅ Squad saved to Supabase')
+      } else {
+        console.warn('⚠️ Failed to save squad to Supabase (localStorage still works)')
+      }
+    } catch (apiError) {
+      console.warn('⚠️ Supabase save failed, using localStorage only:', apiError)
+    }
   } catch (error) {
     console.error('Failed to save squad:', error)
   }
 }
 
 /**
- * Load saved squad from localStorage
+ * Load saved squad from Supabase (with localStorage fallback)
  */
-export const loadSquad = (walletAddress: string): SavedSquad | null => {
+export const loadSquad = async (walletAddress: string): Promise<SavedSquad | null> => {
   try {
+    // Try loading from Supabase first
+    try {
+      const response = await fetch('/api/squad')
+      if (response.ok) {
+        const { squad } = await response.json()
+        if (squad && squad.players) {
+          console.log('✅ Loaded squad from Supabase')
+          return {
+            walletAddress,
+            formation: squad.formation,
+            assignedPlayers: squad.players,
+            savedAt: squad.updated_at
+          }
+        }
+      }
+    } catch (apiError) {
+      console.warn('⚠️ Supabase load failed, trying localStorage:', apiError)
+    }
+
+    // Fallback to localStorage
     const savedData = localStorage.getItem(STORAGE_KEY)
     if (!savedData) return null
 

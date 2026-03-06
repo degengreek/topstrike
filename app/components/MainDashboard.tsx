@@ -86,25 +86,28 @@ export default function MainDashboard() {
   // Load saved squad when wallet changes
   useEffect(() => {
     if (linkedWallet && players.length > 0) {
-      const saved = loadSquad(linkedWallet)
-      if (saved) {
-        setFormation(saved.formation as FormationType)
-        const newAssigned = new Map<string, Player>()
-        Object.entries(saved.assignedPlayers).forEach(([posId, playerData]: [string, any]) => {
-          const player = players.find(p => p.id === playerData.id)
-          if (player) {
-            newAssigned.set(posId, player)
-          }
-        })
-        setAssignedPlayers(newAssigned)
-      }
+      loadSquad(linkedWallet).then(saved => {
+        if (saved) {
+          setFormation(saved.formation as FormationType)
+          const newAssigned = new Map<string, Player>()
+          Object.entries(saved.assignedPlayers).forEach(([posId, playerData]: [string, any]) => {
+            const player = players.find(p => p.id === playerData.id)
+            if (player) {
+              newAssigned.set(posId, player)
+            }
+          })
+          setAssignedPlayers(newAssigned)
+        }
+      })
     }
   }, [linkedWallet, players])
 
   // Auto-save squad on changes
   useEffect(() => {
     if (linkedWallet && assignedPlayers.size > 0) {
-      saveSquad(linkedWallet, formation, assignedPlayers)
+      saveSquad(linkedWallet, formation, assignedPlayers).catch(err => {
+        console.error('Auto-save failed:', err)
+      })
     }
   }, [linkedWallet, formation, assignedPlayers])
 

@@ -1,35 +1,36 @@
 'use client'
 
 import { Trophy, Crown, Medal, Star, Sparkles } from 'lucide-react'
-import { getAllWalletLinks } from '@/lib/wallet-storage'
 import { useEffect, useState } from 'react'
 
 interface LeaderboardEntry {
-  twitterUsername: string
-  topStrikeUsername?: string
-  walletAddress: string
-  points: number
+  twitter_username: string
+  twitter_handle?: string
+  wallet_address: string
+  total_points: number
+  formation: string
 }
 
 export default function LeaderboardTab() {
   const [entries, setEntries] = useState<LeaderboardEntry[]>([])
+  const [view, setView] = useState<'alltime' | 'current'>('alltime')
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Get all users who linked their wallets via Twitter sign-in
-    const links = getAllWalletLinks()
-
-    const leaderboardData = links.map(link => ({
-      twitterUsername: link.twitterUsername,
-      topStrikeUsername: link.topStrikeUsername,
-      walletAddress: link.walletAddress,
-      points: 0 // Will be calculated later
-    }))
-
-    // Sort by points (descending) - for now all 0
-    leaderboardData.sort((a, b) => b.points - a.points)
-
-    setEntries(leaderboardData)
-  }, [])
+    // Fetch leaderboard from Supabase
+    setLoading(true)
+    fetch(`/api/leaderboard?view=${view}`)
+      .then(res => res.json())
+      .then(data => {
+        setEntries(data.leaderboard || [])
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error('Failed to load leaderboard:', err)
+        setEntries([])
+        setLoading(false)
+      })
+  }, [view])
 
   const getRankIcon = (index: number) => {
     switch (index) {
@@ -123,19 +124,24 @@ export default function LeaderboardTab() {
         </div>
 
         <div className="p-4">
-          {entries.length === 0 ? (
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500 mx-auto mb-4"></div>
+              <p className="text-gray-400">Loading leaderboard...</p>
+            </div>
+          ) : entries.length === 0 ? (
             <div className="text-center py-12">
               <Trophy className="w-16 h-16 text-gray-600 mx-auto mb-4" />
               <p className="text-gray-400 text-lg mb-2">No competitors yet!</p>
               <p className="text-gray-500 text-sm">
-                Be the first to link your wallet and join the competition
+                Be the first to create a squad and join the competition
               </p>
             </div>
           ) : (
             <div className="space-y-3">
               {entries.map((entry, index) => (
                 <div
-                  key={entry.walletAddress}
+                  key={entry.wallet_address || index}
                   className={`flex items-center gap-4 p-4 rounded-xl border-2 transition-all hover:scale-[1.02] ${getRankBadge(index)}`}
                 >
                   {/* Rank */}
@@ -146,24 +152,27 @@ export default function LeaderboardTab() {
                   {/* User Info */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      {entry.topStrikeUsername && (
-                        <p className="text-white font-bold text-lg truncate">
-                          {entry.topStrikeUsername}
-                        </p>
-                      )}
+                      <p className="text-white font-bold text-lg truncate">
+                        {entry.twitter_handle || entry.twitter_username}
+                      </p>
                       <p className="text-gray-400 text-sm truncate">
-                        @{entry.twitterUsername}
+                        @{entry.twitter_username}
                       </p>
                     </div>
-                    <p className="text-xs text-gray-500 font-mono truncate">
-                      {entry.walletAddress.slice(0, 10)}...{entry.walletAddress.slice(-8)}
+                    {entry.wallet_address && (
+                      <p className="text-xs text-gray-500 font-mono truncate">
+                        {entry.wallet_address.slice(0, 10)}...{entry.wallet_address.slice(-8)}
+                      </p>
+                    )}
+                    <p className="text-xs text-blue-400 mt-1">
+                      Formation: {entry.formation}
                     </p>
                   </div>
 
                   {/* Points */}
                   <div className="flex-shrink-0 text-right">
                     <div className="bg-gray-900/50 rounded-lg px-4 py-2 min-w-[100px]">
-                      <p className="text-2xl font-bold text-white">{entry.points}</p>
+                      <p className="text-2xl font-bold text-white">{entry.total_points || 0}</p>
                       <p className="text-xs text-gray-400">points</p>
                     </div>
                   </div>
