@@ -8,7 +8,7 @@ import { searchPlayerByName, getPlaceholderImage, normalizePosition } from '@/li
 import { loadPlayerDatabase, getPlayerFromCache, isDatabaseLoaded } from '@/lib/player-cache'
 import { getTeamOverride } from '@/lib/team-overrides'
 import { getVerifiedPlayerData } from '@/lib/verified-players'
-import { saveSquad, loadSquad, clearSavedSquad } from '@/lib/squad-storage'
+import { saveDraftToLocalStorage, loadSquad, clearSavedSquad } from '@/lib/squad-storage'
 import { saveWalletLink, getWalletLink, hasWalletLink } from '@/lib/wallet-storage'
 import FormationSelector, { getFormationPositions } from './FormationSelector'
 import PlayerPool from './PlayerPool'
@@ -238,7 +238,7 @@ export default function Dashboard() {
   // Auto-save squad when it changes
   useEffect(() => {
     if (walletAddress && assignedPlayers.size > 0) {
-      saveSquad(walletAddress, selectedFormation, assignedPlayers)
+      saveDraftToLocalStorage(walletAddress, selectedFormation, assignedPlayers)
     }
   }, [assignedPlayers, selectedFormation, walletAddress])
 
@@ -393,7 +393,7 @@ export default function Dashboard() {
       setLoading(false)
 
       // Try to load saved squad for this wallet
-      const savedSquad = loadSquad(searchWallet)
+      const savedSquad = await loadSquad(searchWallet)
       if (savedSquad) {
         console.log('📥 Found saved squad, restoring...')
 
