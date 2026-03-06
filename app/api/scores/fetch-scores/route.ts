@@ -112,24 +112,15 @@ export async function POST(request: NextRequest) {
  * Fetch score for a single player from TopStrike API
  */
 async function fetchPlayerScore(playerId: string, playerName: string) {
-  const url = `https://play.topstrike.io/api/fapi-server/player-match-history?tokenId=${playerId}&limit=1`
+  // Use CORS proxy to bypass Cloudflare blocking
+  const targetUrl = `https://play.topstrike.io/api/fapi-server/player-match-history?tokenId=${playerId}&limit=1`
+  const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`
 
   console.log(`🔍 Fetching player ${playerId} (${playerName})...`)
 
-  const response = await fetch(url, {
+  const response = await fetch(proxyUrl, {
     headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-      'Accept': 'application/json, text/plain, */*',
-      'Accept-Language': 'en-US,en;q=0.9',
-      'Accept-Encoding': 'gzip, deflate, br',
-      'Referer': 'https://play.topstrike.io/',
-      'Origin': 'https://play.topstrike.io',
-      'Connection': 'keep-alive',
-      'Sec-Fetch-Dest': 'empty',
-      'Sec-Fetch-Mode': 'cors',
-      'Sec-Fetch-Site': 'same-origin',
-      'Cache-Control': 'no-cache',
-      'Pragma': 'no-cache'
+      'Accept': 'application/json'
     }
   })
 
