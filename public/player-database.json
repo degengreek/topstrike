@@ -509,8 +509,8 @@
     "id": 60,
     "name": "Rio Ngumoah",
     "imageUrl": "/player-images/ngumoha.png",
-    "position": null,
-    "team": null,
+    "position": "Left Winger",
+    "team": "Liverpool",
     "sportsDbId": null,
     "lastAttempt": "2026-02-27T17:48:11.738Z",
     "attempts": 1
