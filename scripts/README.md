@@ -6,22 +6,28 @@ This script runs on your local machine to fetch player scores from TopStrike API
 
 Cloudflare blocks server requests from Vercel, but local requests work fine. This script:
 - ✅ Runs on your computer (bypasses Cloudflare)
-- ✅ Fetches real scores from TopStrike API
+- ✅ Fetches scores for ALL TopStrike players (not wallet-specific)
 - ✅ Updates Supabase database directly
+- ✅ Benefits ALL users of your app
 - ✅ Can run continuously in the background
 - ✅ Your Vercel app reads scores from database automatically
 
+## Key Feature: Universal Scores
+
+**Fetches scores for ALL players** (ID 1-200 by default), so:
+- All users can see their player scores
+- No need to know individual wallet addresses
+- Run once, everyone benefits!
+
 ## Setup
 
-1. **Make sure `.env.local` has these variables:**
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=https://kricmstshlkaxpbzeucb.supabase.co
-   SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
-   ```
+**Make sure `.env.local` has these variables:**
+```
+NEXT_PUBLIC_SUPABASE_URL=https://kricmstshlkaxpbzeucb.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+```
 
-2. **Add player IDs to database first** (one-time setup):
-   - The script will automatically detect players from the `player_scores` table
-   - Or you can manually add them via Supabase dashboard
+That's it! No other setup needed.
 
 ## Usage
 
@@ -41,20 +47,24 @@ node scripts/fetch-scores-local.js --watch
 🚀 Starting score fetch...
 ⏰ 3/7/2026, 10:30:00 AM
 
-📊 Found 22 players in database
+📊 Fetching scores for ALL players (ID 1 to 200)
+   This benefits all users, not just one wallet!
 
-  🔍 Fetching Reece James (ID: 14)...
-  ✅ Reece James: 34 pts vs Arsenal
+  [10/200] ✅ Player 14: 34 pts
+  [20/200] ✅ Player 23: 28 pts
+  [30/200] ✅ Player 35: 15 pts
+  ...
 
-  🔍 Fetching Jamal Musiala (ID: 70)...
-  ✅ Jamal Musiala: 28 pts vs Dortmund
+📊 Fetch complete: 87 players found, 113 skipped
 
 💾 Saving scores to database...
 
 ✅ Successfully updated scores!
-📈 Total: 450 pts | Average: 20 pts
-📊 22/22 players with scores
+📈 Total: 1,842 pts | Average: 21 pts
+📊 87/87 players with scores
 ```
+
+*Note: The script automatically skips player IDs that don't exist.*
 
 ## Tips
 

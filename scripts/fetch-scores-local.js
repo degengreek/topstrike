@@ -20,40 +20,31 @@ const supabase = createClient(
 
 // Configuration
 const FETCH_INTERVAL = 60 * 60 * 1000 // 1 hour in milliseconds
-const WALLET_ADDRESS = process.env.WALLET_ADDRESS || '' // Your wallet address
+const MAX_PLAYER_ID = 200 // Adjust this based on total players in TopStrike
+const START_PLAYER_ID = 1
 
 /**
- * Fetch player IDs from wallet or database
+ * Get all player IDs to fetch
+ * Fetches scores for ALL players in TopStrike (not wallet-specific)
  */
 async function getPlayerIds() {
-  if (WALLET_ADDRESS) {
-    console.log(`📍 Fetching players from wallet: ${WALLET_ADDRESS}`)
-    // You can add wallet fetching logic here if needed
-    // For now, we'll get player IDs from the database
+  console.log(`📊 Fetching scores for ALL players (ID ${START_PLAYER_ID} to ${MAX_PLAYER_ID})`)
+  console.log(`   This benefits all users, not just one wallet!\n`)
+
+  const players = []
+  for (let id = START_PLAYER_ID; id <= MAX_PLAYER_ID; id++) {
+    players.push({ id: id.toString(), name: `Player ${id}` })
   }
 
-  // Get existing player IDs from database
-  const { data: scores, error } = await supabase
-    .from('player_scores')
-    .select('player_id, player_name')
-
-  if (error) {
-    console.error('❌ Error fetching player IDs from database:', error)
-    return []
-  }
-
-  console.log(`📊 Found ${scores.length} players in database`)
-  return scores.map(s => ({ id: s.player_id, name: s.player_name }))
+  return players
 }
 
 /**
  * Fetch score for a single player from TopStrike API
  */
-async function fetchPlayerScore(playerId, playerName) {
+async function fetchPlayerScore(playerId, playerName, index, total) {
   try {
     const url = `https://play.topstrike.io/api/fapi-server/player-match-history?tokenId=${playerId}&limit=1`
-
-    console.log(`  🔍 Fetching ${playerName} (ID: ${playerId})...`)
 
     const response = await fetch(url, {
       headers: {
@@ -64,46 +55,41 @@ async function fetchPlayerScore(playerId, playerName) {
     })
 
     if (!response.ok) {
+      // Player doesn't exist or no data - skip silently
+      if (response.status === 404 || response.status === 400) {
+        return null
+      }
       throw new Error(`API returned ${response.status}`)
     }
 
     const data = await response.json()
 
-    // No match history
+    // No match history - skip
     if (!data || data.length === 0) {
-      console.log(`  ⚠️  No matches found for ${playerName}`)
-      return {
-        player_id: playerId,
-        player_name: playerName,
-        most_recent_score: 0,
-        match_date: null,
-        match_opponent: null,
-        match_state: null
-      }
+      return null
     }
 
     // Get most recent match
     const match = data[0]
-    console.log(`  ✅ ${playerName}: ${match.totalScore} pts vs ${match.opponentName}`)
+
+    // Extract actual player name if available
+    const actualPlayerName = match.playerTeamName ? `${playerName} (${match.playerTeamName})` : playerName
+
+    if (index % 10 === 0) {
+      console.log(`  [${index}/${total}] ✅ Player ${playerId}: ${match.totalScore} pts`)
+    }
 
     return {
       player_id: playerId,
-      player_name: playerName,
+      player_name: actualPlayerName,
       most_recent_score: match.totalScore,
       match_date: match.matchDate,
       match_opponent: match.opponentName,
       match_state: match.matchState
     }
   } catch (error) {
-    console.error(`  ❌ Failed to fetch ${playerName}:`, error.message)
-    return {
-      player_id: playerId,
-      player_name: playerName,
-      most_recent_score: 0,
-      match_date: null,
-      match_opponent: null,
-      match_state: null
-    }
+    // Skip players that error out (likely don't exist)
+    return null
   }
 }
 
@@ -123,15 +109,26 @@ async function fetchAndUpdateScores() {
   }
 
   const results = []
+  let successCount = 0
+  let skipCount = 0
 
   // Fetch scores for each player
-  for (const player of players) {
-    const score = await fetchPlayerScore(player.id, player.name)
-    results.push(score)
+  for (let i = 0; i < players.length; i++) {
+    const player = players[i]
+    const score = await fetchPlayerScore(player.id, player.name, i + 1, players.length)
+
+    if (score) {
+      results.push(score)
+      successCount++
+    } else {
+      skipCount++
+    }
 
     // Small delay to avoid rate limiting
-    await new Promise(resolve => setTimeout(resolve, 200))
+    await new Promise(resolve => setTimeout(resolve, 150))
   }
+
+  console.log(`\n📊 Fetch complete: ${successCount} players found, ${skipCount} skipped`)
 
   // Save to database
   console.log('\n💾 Saving scores to database...')
