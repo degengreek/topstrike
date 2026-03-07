@@ -191,7 +191,7 @@ async function fetchAndUpdateScores() {
 
   const { error } = await supabase
     .from('player_scores')
-    .upsert(results, { onConflict: 'player_id' })
+    .upsert(results, { onConflict: 'player_id,gameweek_id' })
 
   if (error) {
     console.error('❌ Error saving to database:', error)
