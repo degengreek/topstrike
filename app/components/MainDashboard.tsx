@@ -37,9 +37,7 @@ function getPlaceholderImage(name: string): string {
 }
 
 export default function MainDashboard() {
-  const { data: session } = useSession({
-    refetchOnWindowFocus: false // Prevent refetch when returning to tab
-  })
+  const { data: session } = useSession()
   const [activeTab, setActiveTab] = useState<'squad' | 'portfolio' | 'fixtures' | 'leaderboard'>('squad')
 
   // User's linked wallet (permanent)
@@ -89,7 +87,7 @@ export default function MainDashboard() {
         fetchPortfolio(savedWallet, true)
       }
     }
-  }, [session])
+  }, [session?.user?.id]) // Only refetch if user ID changes, not entire session object
 
   // Load saved squad when wallet changes
   useEffect(() => {
