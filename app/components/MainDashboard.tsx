@@ -37,7 +37,9 @@ function getPlaceholderImage(name: string): string {
 }
 
 export default function MainDashboard() {
-  const { data: session } = useSession()
+  const { data: session } = useSession({
+    refetchOnWindowFocus: false // Prevent refetch when returning to tab
+  })
   const [activeTab, setActiveTab] = useState<'squad' | 'portfolio' | 'fixtures' | 'leaderboard'>('squad')
 
   // User's linked wallet (permanent)
