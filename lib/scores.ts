@@ -53,11 +53,21 @@ export async function fetchPlayerScores(players: Array<{ id: string, name: strin
 }
 
 /**
- * Get all stored scores from database
+ * Get all stored scores from database (current gameweek only)
  */
 export async function getStoredScores(): Promise<PlayerScore[]> {
   try {
-    const response = await fetch('/api/scores/fetch-scores')
+    // Get current gameweek first
+    const gwResponse = await fetch('/api/gameweek/current')
+    if (!gwResponse.ok) return []
+
+    const gwData = await gwResponse.json()
+    const currentGameweek = gwData.gameweek
+
+    if (!currentGameweek) return []
+
+    // Get scores for current gameweek only
+    const response = await fetch(`/api/scores/fetch-scores?gameweek_id=${currentGameweek.id}`)
 
     if (!response.ok) {
       throw new Error('Failed to fetch stored scores')

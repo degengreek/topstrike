@@ -46,7 +46,7 @@ async function getPlayerIds() {
 /**
  * Fetch score for a single player from TopStrike API
  */
-async function fetchPlayerScore(playerId, playerName, index, total) {
+async function fetchPlayerScore(playerId, playerName, index, total, gameweek) {
   try {
     const url = `https://play.topstrike.io/api/fapi-server/player-match-history?tokenId=${playerId}&limit=1`
 
@@ -76,17 +76,18 @@ async function fetchPlayerScore(playerId, playerName, index, total) {
     // Get most recent match
     const match = data[0]
 
-    // Check if match is within last 3 days
+    // Check if match is within current gameweek
     const matchDate = new Date(match.matchDate)
-    const threeDaysAgo = new Date()
-    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3)
+    const gwStart = new Date(gameweek.start_date)
+    const gwEnd = new Date(gameweek.end_date)
 
-    // If match is older than 3 days, don't count the score
-    if (matchDate < threeDaysAgo) {
+    // If match is NOT in current gameweek, set score to 0
+    if (matchDate < gwStart || matchDate > gwEnd) {
       return {
         player_id: playerId,
         player_name: playerName,
-        most_recent_score: 0, // Old match, set score to 0
+        gameweek_id: gameweek.id,
+        most_recent_score: 0, // Not in current gameweek
         match_date: null,
         match_opponent: null,
         match_state: null
@@ -99,7 +100,8 @@ async function fetchPlayerScore(playerId, playerName, index, total) {
 
     return {
       player_id: playerId,
-      player_name: playerName, // Keep simple "Player X" - app will use its own name mapping
+      player_name: playerName,
+      gameweek_id: gameweek.id,
       most_recent_score: match.totalScore,
       match_date: match.matchDate,
       match_opponent: match.opponentName,
@@ -116,11 +118,38 @@ async function fetchPlayerScore(playerId, playerName, index, total) {
 }
 
 /**
+ * Get current active gameweek
+ */
+async function getCurrentGameweek() {
+  const { data: gameweek, error } = await supabase
+    .from('gameweeks')
+    .select('*')
+    .eq('is_active', true)
+    .single()
+
+  if (error || !gameweek) {
+    console.error('❌ No active gameweek found!')
+    return null
+  }
+
+  console.log(`📅 Current Gameweek: #${gameweek.week_number}`)
+  console.log(`   Dates: ${gameweek.start_date} → ${gameweek.end_date}`)
+  return gameweek
+}
+
+/**
  * Fetch all scores and update database
  */
 async function fetchAndUpdateScores() {
   console.log('\n🚀 Starting score fetch...')
   console.log(`⏰ ${new Date().toLocaleString()}\n`)
+
+  // Get current active gameweek
+  const currentGameweek = await getCurrentGameweek()
+  if (!currentGameweek) {
+    console.log('❌ Cannot fetch scores without an active gameweek.')
+    return
+  }
 
   // Get player IDs
   const players = await getPlayerIds()
@@ -137,7 +166,7 @@ async function fetchAndUpdateScores() {
   // Fetch scores for each player
   for (let i = 0; i < players.length; i++) {
     const player = players[i]
-    const score = await fetchPlayerScore(player.id, player.name, i + 1, players.length)
+    const score = await fetchPlayerScore(player.id, player.name, i + 1, players.length, currentGameweek)
 
     if (score) {
       results.push(score)

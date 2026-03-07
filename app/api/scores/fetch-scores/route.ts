@@ -166,14 +166,23 @@ async function fetchPlayerScore(playerId: string, playerName: string) {
 
 /**
  * GET /api/scores/fetch-scores
- * Get all stored scores from database
+ * Get all stored scores from database (optionally filter by gameweek)
  */
 export async function GET(request: NextRequest) {
   try {
-    const { data: scores, error } = await supabaseAdmin
+    const { searchParams } = new URL(request.url)
+    const gameweekId = searchParams.get('gameweek_id')
+
+    let query = supabaseAdmin
       .from('player_scores')
       .select('*')
-      .order('last_updated', { ascending: false })
+
+    // Filter by gameweek if provided
+    if (gameweekId) {
+      query = query.eq('gameweek_id', gameweekId)
+    }
+
+    const { data: scores, error } = await query.order('last_updated', { ascending: false })
 
     if (error) {
       throw error
