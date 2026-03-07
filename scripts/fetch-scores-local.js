@@ -94,9 +94,8 @@ async function fetchPlayerScore(playerId, playerName, index, total, gameweek) {
       }
     }
 
-    if (index % 10 === 0) {
-      console.log(`  [${index}/${total}] ✅ Player ${playerId}: ${match.totalScore} pts (${match.matchDate})`)
-    }
+    // Show progress for every player with a score
+    console.log(`  [${index}/${total}] ✅ Player ${playerId}: ${match.totalScore} pts (${match.matchDate})`)
 
     return {
       player_id: playerId,
@@ -166,6 +165,12 @@ async function fetchAndUpdateScores() {
   // Fetch scores for each player
   for (let i = 0; i < players.length; i++) {
     const player = players[i]
+
+    // Show progress every 5 players
+    if (i % 5 === 0 && i > 0) {
+      process.stdout.write(`  [${i}/${players.length}] Processing...\r`)
+    }
+
     const score = await fetchPlayerScore(player.id, player.name, i + 1, players.length, currentGameweek)
 
     if (score) {
@@ -176,7 +181,7 @@ async function fetchAndUpdateScores() {
     }
 
     // Small delay to avoid rate limiting
-    await new Promise(resolve => setTimeout(resolve, 150))
+    await new Promise(resolve => setTimeout(resolve, 100))
   }
 
   console.log(`\n📊 Fetch complete: ${successCount} players found, ${skipCount} skipped`)
