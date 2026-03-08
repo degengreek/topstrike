@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { formations, FormationType } from '@/lib/formations'
 import { getCurrentGameweek, isSquadLocked, getTimeUntilChange, formatTimeRemaining, type Gameweek } from '@/lib/gameweek'
-import { fetchPlayerScores, getStoredScores, getPlayerScore, type PlayerScore } from '@/lib/scores'
+import { getStoredScores, getPlayerScore, type PlayerScore } from '@/lib/scores'
 
 interface Player {
   id: string
@@ -85,7 +85,6 @@ export default function SquadBuilderTab({
 
   // Scores state
   const [scores, setScores] = useState<PlayerScore[]>([])
-  const [fetchingScores, setFetchingScores] = useState(false)
 
   const currentFormation = formations[formation]
 
@@ -185,28 +184,6 @@ export default function SquadBuilderTab({
     }
   }
 
-  const handleRefreshScores = async () => {
-    setFetchingScores(true)
-    try {
-      // Prepare player data for API
-      const playerIds = players.map(p => ({
-        id: p.id,
-        name: p.name
-      }))
-
-      await fetchPlayerScores(playerIds)
-
-      // Reload scores from database
-      const updatedScores = await getStoredScores()
-      setScores(updatedScores)
-
-      alert(`✅ Successfully fetched scores for ${players.length} players!`)
-    } catch (error: any) {
-      alert(`❌ Failed to fetch scores: ${error.message}`)
-    } finally {
-      setFetchingScores(false)
-    }
-  }
 
   return (
     <div className="flex gap-6 min-h-[calc(100vh-200px)]">
@@ -461,23 +438,6 @@ export default function SquadBuilderTab({
             )}
           </button>
 
-          {/* Refresh Scores Button */}
-          <button
-            onClick={handleRefreshScores}
-            disabled={fetchingScores}
-            className="w-full px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-500 hover:to-indigo-500 transition-all font-semibold text-sm shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-          >
-            {fetchingScores ? (
-              <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                Fetching Scores...
-              </>
-            ) : (
-              <>
-                📊 Refresh Scores
-              </>
-            )}
-          </button>
 
           {/* Success Message */}
           {saveSuccess && (
