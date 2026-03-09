@@ -8,18 +8,47 @@ interface LeaderboardEntry {
   twitter_handle?: string
   wallet_address: string
   total_points: number
-  formation: string
+}
+
+interface Gameweek {
+  id: string
+  week_number: number
+  start_date: string
+  end_date: string
 }
 
 export default function LeaderboardTab() {
   const [entries, setEntries] = useState<LeaderboardEntry[]>([])
-  const [view, setView] = useState<'alltime' | 'current'>('alltime')
+  const [view, setView] = useState<'gameweek' | 'overall'>('overall')
   const [loading, setLoading] = useState(true)
+  const [gameweeks, setGameweeks] = useState<Gameweek[]>([])
+  const [selectedGameweek, setSelectedGameweek] = useState<string | null>(null)
 
+  // Fetch all gameweeks on mount
   useEffect(() => {
-    // Fetch leaderboard from Supabase
+    fetch('/api/gameweek/list')
+      .then(res => res.json())
+      .then(data => {
+        if (data.gameweeks && data.gameweeks.length > 0) {
+          setGameweeks(data.gameweeks)
+          // Default to most recent gameweek (first in descending order)
+          setSelectedGameweek(data.gameweeks[0].id)
+        }
+      })
+      .catch(err => console.error('Failed to load gameweeks:', err))
+  }, [])
+
+  // Fetch leaderboard data
+  useEffect(() => {
+    if (view === 'gameweek' && !selectedGameweek) return
+
     setLoading(true)
-    fetch(`/api/leaderboard?view=${view}`)
+
+    const url = view === 'overall'
+      ? '/api/leaderboard/overall'
+      : `/api/leaderboard/gameweek?gameweek_id=${selectedGameweek}`
+
+    fetch(url)
       .then(res => res.json())
       .then(data => {
         setEntries(data.leaderboard || [])
@@ -30,7 +59,7 @@ export default function LeaderboardTab() {
         setEntries([])
         setLoading(false)
       })
-  }, [view])
+  }, [view, selectedGameweek])
 
   const getRankIcon = (index: number) => {
     switch (index) {
@@ -114,11 +143,58 @@ export default function LeaderboardTab() {
       {/* Leaderboard */}
       <div className="bg-gray-800/50 rounded-xl border border-gray-700 overflow-hidden">
         <div className="bg-gradient-to-r from-green-600 to-emerald-600 p-4">
-          <h3 className="text-xl font-bold text-white flex items-center gap-2">
-            <Trophy className="w-6 h-6" />
-            Global Leaderboard
-          </h3>
-          <p className="text-sm text-green-100 mt-1">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <Trophy className="w-6 h-6 text-white" />
+              <h3 className="text-xl font-bold text-white">
+                {view === 'overall' ? 'Overall Leaderboard' : 'Gameweek Leaderboard'}
+              </h3>
+            </div>
+
+            {/* View Toggle */}
+            <div className="flex gap-2">
+              <button
+                onClick={() => setView('overall')}
+                className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
+                  view === 'overall'
+                    ? 'bg-white text-green-600'
+                    : 'bg-green-700 text-white hover:bg-green-600'
+                }`}
+              >
+                Overall
+              </button>
+              <button
+                onClick={() => setView('gameweek')}
+                className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
+                  view === 'gameweek'
+                    ? 'bg-white text-green-600'
+                    : 'bg-green-700 text-white hover:bg-green-600'
+                }`}
+              >
+                Gameweek
+              </button>
+            </div>
+          </div>
+
+          {/* Gameweek Selector */}
+          {view === 'gameweek' && gameweeks.length > 0 && (
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-green-100">Viewing:</span>
+              <select
+                value={selectedGameweek || ''}
+                onChange={(e) => setSelectedGameweek(e.target.value)}
+                className="bg-green-700 text-white px-3 py-1.5 rounded-lg text-sm font-medium border border-green-500 focus:outline-none focus:ring-2 focus:ring-white"
+              >
+                {gameweeks.map(gw => (
+                  <option key={gw.id} value={gw.id}>
+                    Gameweek {gw.week_number}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          <p className="text-sm text-green-100 mt-2">
             {entries.length} {entries.length === 1 ? 'manager' : 'managers'} competing
           </p>
         </div>

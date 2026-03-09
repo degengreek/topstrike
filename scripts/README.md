@@ -86,3 +86,41 @@ Run every hour automatically:
 
 ### Manual Schedule
 Just run with `--watch` and leave the terminal open!
+
+---
+
+## Gameweek Points System
+
+### Complete Workflow (3 Steps)
+
+**Step 1: Lock Squads (Friday 14:00 UTC)**
+```bash
+node scripts/lock-gameweek-squads.js
+```
+This snapshots all users' squads at lock time. Users cannot cheat by changing squads after seeing match results!
+
+**Step 2: Fetch Scores (During Gameweek - Fri-Mon)**
+```bash
+node scripts/fetch-scores-local.js
+```
+Run this multiple times during the gameweek to get latest player scores.
+
+**Step 3: Calculate Points (After Monday 22:00 UTC)**
+```bash
+node scripts/calculate-gameweek-points.js
+```
+Calculates final points for all users based on their locked squads.
+
+### Important Notes
+
+- **ALWAYS lock squads first** (Friday 14:00) before matches start
+- Calculate points uses the **locked snapshot** from lock time, not current squads
+- This prevents cheating - users can't change squads after seeing scores
+
+### Manual Gameweek Number
+
+You can specify gameweek number for any script:
+```bash
+node scripts/lock-gameweek-squads.js 1
+node scripts/calculate-gameweek-points.js 1
+```
