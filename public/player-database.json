@@ -1454,5 +1454,65 @@
     "sportsDbId": "34147789",
     "lastAttempt": "2026-03-06T13:52:57.709Z",
     "attempts": 1
+  },
+  {
+    "id": 171,
+    "name": "Kevin Danso",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/unhinl1739274856.png",
+    "position": "Centre-Back",
+    "team": "Tottenham Hotspur",
+    "sportsDbId": "34170160",
+    "lastAttempt": "2026-03-09T14:48:39.589Z",
+    "attempts": 1
+  },
+  {
+    "id": 172,
+    "name": "Curtis Jones",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/ghs3g51757088342.png",
+    "position": "Central Midfield",
+    "team": "Liverpool",
+    "sportsDbId": "34168991",
+    "lastAttempt": "2026-03-09T14:48:55.885Z",
+    "attempts": 1
+  },
+  {
+    "id": 173,
+    "name": "Luis Díaz",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/emmcyf1756408968.png",
+    "position": "Left Wing",
+    "team": "Bayern Munich",
+    "sportsDbId": "34171827",
+    "lastAttempt": "2026-03-09T14:49:12.143Z",
+    "attempts": 1
+  },
+  {
+    "id": 174,
+    "name": "Konrad Laimer",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/dzukrz1756409157.png",
+    "position": "Midfielder",
+    "team": "Bayern Munich",
+    "sportsDbId": "34164105",
+    "lastAttempt": "2026-03-09T14:49:28.401Z",
+    "attempts": 1
+  },
+  {
+    "id": 175,
+    "name": "Dayot Upamecano",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/a1hyfj1756416177.png",
+    "position": "Centre-Back",
+    "team": "Bayern Munich",
+    "sportsDbId": "34164100",
+    "lastAttempt": "2026-03-09T14:49:44.692Z",
+    "attempts": 1
+  },
+  {
+    "id": 176,
+    "name": "Pedro Porro",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/cy918t1762021683.png",
+    "position": "Right-Back",
+    "team": "Tottenham Hotspur",
+    "sportsDbId": "34170315",
+    "lastAttempt": "2026-03-09T14:50:01.040Z",
+    "attempts": 1
   }
 ]
