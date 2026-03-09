@@ -27,7 +27,10 @@ export async function GET(request: NextRequest) {
         users (
           twitter_username,
           twitter_handle,
-          wallet_address
+          wallet_address,
+          squads (
+            formation
+          )
         )
       `)
       .eq('gameweek_id', gameweekId)
@@ -42,12 +45,19 @@ export async function GET(request: NextRequest) {
     }
 
     // Format response
-    const formattedLeaderboard = leaderboard.map(entry => ({
-      twitter_username: entry.users?.twitter_username || 'Unknown',
-      twitter_handle: entry.users?.twitter_handle || null,
-      wallet_address: entry.users?.wallet_address || null,
-      total_points: entry.points
-    }))
+    const formattedLeaderboard = leaderboard.map((entry: any) => {
+      const user = Array.isArray(entry.users) ? entry.users[0] : entry.users
+      const squads = user?.squads
+      const squad = Array.isArray(squads) ? squads[0] : squads
+
+      return {
+        twitter_username: user?.twitter_username || 'Unknown',
+        twitter_handle: user?.twitter_handle || null,
+        wallet_address: user?.wallet_address || null,
+        formation: squad?.formation || '4-3-3',
+        total_points: entry.points
+      }
+    })
 
     return NextResponse.json({
       leaderboard: formattedLeaderboard

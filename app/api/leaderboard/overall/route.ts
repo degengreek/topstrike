@@ -17,7 +17,10 @@ export async function GET(request: NextRequest) {
         users (
           twitter_username,
           twitter_handle,
-          wallet_address
+          wallet_address,
+          squads (
+            formation
+          )
         )
       `)
 
@@ -32,13 +35,18 @@ export async function GET(request: NextRequest) {
     // Group by user and sum points
     const userTotals: Record<string, any> = {}
 
-    allPoints.forEach(entry => {
+    allPoints.forEach((entry: any) => {
       const userId = entry.user_id
+      const user = Array.isArray(entry.users) ? entry.users[0] : entry.users
+      const squads = user?.squads
+      const squad = Array.isArray(squads) ? squads[0] : squads
+
       if (!userTotals[userId]) {
         userTotals[userId] = {
-          twitter_username: entry.users?.twitter_username || 'Unknown',
-          twitter_handle: entry.users?.twitter_handle || null,
-          wallet_address: entry.users?.wallet_address || null,
+          twitter_username: user?.twitter_username || 'Unknown',
+          twitter_handle: user?.twitter_handle || null,
+          wallet_address: user?.wallet_address || null,
+          formation: squad?.formation || '4-3-3',
           total_points: 0
         }
       }

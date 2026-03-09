@@ -7,6 +7,7 @@ interface LeaderboardEntry {
   twitter_username: string
   twitter_handle?: string
   wallet_address: string
+  formation?: string
   total_points: number
 }
 
