@@ -1,7 +1,8 @@
 'use client'
 
-import { X, Eye } from 'lucide-react'
+import { X, Eye, TrendingUp } from 'lucide-react'
 import { getTopStrikeUsername } from '@/lib/topstrike-usernames'
+import { useState } from 'react'
 
 interface Player {
   id: string
@@ -11,6 +12,13 @@ interface Player {
   imageUrl?: string | null
   currentPriceInWei?: string
   sharesOwnedInFullShares?: number
+}
+
+interface GameweekHistory {
+  week_number: number
+  points: number
+  start_date?: string
+  end_date?: string
 }
 
 interface ViewWalletModalProps {
@@ -28,10 +36,37 @@ export default function ViewWalletModal({
   walletBalance,
   onClose
 }: ViewWalletModalProps) {
+  const [expandedPlayer, setExpandedPlayer] = useState<string | null>(null)
+  const [playerHistory, setPlayerHistory] = useState<Record<string, GameweekHistory[]>>({})
+  const [loadingHistory, setLoadingHistory] = useState<Record<string, boolean>>({})
+
   const formatBalance = (balance: string) => {
     if (!balance) return '0.00'
     const eth = parseFloat(balance)
     return eth.toFixed(4)
+  }
+
+  const fetchPlayerHistory = async (playerId: string) => {
+    // If already fetched, just toggle
+    if (playerHistory[playerId]) {
+      setExpandedPlayer(expandedPlayer === playerId ? null : playerId)
+      return
+    }
+
+    // Fetch history
+    setLoadingHistory({ ...loadingHistory, [playerId]: true })
+    try {
+      const response = await fetch(`/api/player-scores/history?player_id=${playerId}`)
+      if (response.ok) {
+        const data = await response.json()
+        setPlayerHistory({ ...playerHistory, [playerId]: data.history || [] })
+        setExpandedPlayer(playerId)
+      }
+    } catch (error) {
+      console.error('Failed to fetch player history:', error)
+    } finally {
+      setLoadingHistory({ ...loadingHistory, [playerId]: false })
+    }
   }
 
   const shortAddress = `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`
@@ -102,42 +137,94 @@ export default function ViewWalletModal({
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {players.map((player) => (
-                  <div
-                    key={player.id}
-                    className="relative bg-gray-700/50 rounded-lg p-4 border border-gray-600"
-                  >
-                    {/* Shares Badge */}
-                    {player.sharesOwnedInFullShares && player.sharesOwnedInFullShares > 1 && (
-                      <div className="absolute top-2 right-2 bg-blue-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-lg">
-                        {player.sharesOwnedInFullShares}
-                      </div>
-                    )}
+                {players.map((player) => {
+                  const isExpanded = expandedPlayer === player.id
+                  const history = playerHistory[player.id] || []
+                  const isLoading = loadingHistory[player.id]
 
-                    <div className="flex flex-col items-center mb-3">
-                      {player.imageUrl ? (
-                        <img
-                          src={player.imageUrl}
-                          alt={player.name}
-                          className="w-20 h-20 rounded-full object-cover border-2 border-gray-600 mb-3"
-                        />
-                      ) : (
-                        <div className="w-20 h-20 rounded-full bg-gray-600 flex items-center justify-center border-2 border-gray-600 mb-3">
-                          <span className="text-xl font-bold text-gray-400">
-                            {player.name.charAt(0)}
-                          </span>
+                  return (
+                    <div
+                      key={player.id}
+                      className="relative bg-gray-700/50 rounded-lg p-4 border border-gray-600 hover:border-blue-500 transition-all cursor-pointer"
+                      onClick={() => fetchPlayerHistory(player.id)}
+                    >
+                      {/* Shares Badge */}
+                      {player.sharesOwnedInFullShares && player.sharesOwnedInFullShares > 1 && (
+                        <div className="absolute top-2 right-2 bg-blue-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-lg">
+                          {player.sharesOwnedInFullShares}
                         </div>
                       )}
-                      <p className="font-semibold text-white text-sm text-center">{player.name}</p>
+
+                      <div className="flex flex-col items-center mb-3">
+                        {player.imageUrl ? (
+                          <img
+                            src={player.imageUrl}
+                            alt={player.name}
+                            className="w-20 h-20 rounded-full object-cover border-2 border-gray-600 mb-3"
+                          />
+                        ) : (
+                          <div className="w-20 h-20 rounded-full bg-gray-600 flex items-center justify-center border-2 border-gray-600 mb-3">
+                            <span className="text-xl font-bold text-gray-400">
+                              {player.name.charAt(0)}
+                            </span>
+                          </div>
+                        )}
+                        <p className="font-semibold text-white text-sm text-center">{player.name}</p>
+                      </div>
+
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-semibold text-green-400 bg-green-400/10 px-2 py-1 rounded">
+                          {player.position}
+                        </span>
+                        <p className="text-xs text-gray-400">{player.team}</p>
+                      </div>
+
+                      {/* Gameweek History */}
+                      {isExpanded && (
+                        <div className="mt-3 pt-3 border-t border-gray-600">
+                          <div className="flex items-center gap-2 mb-2">
+                            <TrendingUp className="w-4 h-4 text-blue-400" />
+                            <p className="text-xs font-semibold text-blue-400">Gameweek History</p>
+                          </div>
+
+                          {isLoading ? (
+                            <div className="text-center py-2">
+                              <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></div>
+                            </div>
+                          ) : history.length === 0 ? (
+                            <p className="text-xs text-gray-500 text-center py-2">No gameweek data yet</p>
+                          ) : (
+                            <div className="flex flex-wrap gap-2">
+                              {history.map((gw) => (
+                                <div
+                                  key={gw.week_number}
+                                  className={`flex flex-col items-center px-2 py-1 rounded text-xs ${
+                                    gw.points > 15
+                                      ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+                                      : gw.points > 10
+                                      ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                                      : gw.points > 5
+                                      ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+                                      : 'bg-red-500/20 text-red-400 border border-red-500/30'
+                                  }`}
+                                >
+                                  <span className="font-bold">{gw.points}</span>
+                                  <span className="text-[10px] opacity-70">GW{gw.week_number}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {!isExpanded && (
+                        <p className="text-xs text-center text-blue-400 mt-2 opacity-70">
+                          Click to view history
+                        </p>
+                      )}
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold text-green-400 bg-green-400/10 px-2 py-1 rounded">
-                        {player.position}
-                      </span>
-                      <p className="text-xs text-gray-400">{player.team}</p>
-                    </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             )}
           </div>
