@@ -360,21 +360,30 @@ export default function SquadBuilderTab({
                   {assignedPlayers.has(position.id) ? (
                     // Assigned Player
                     <div className="relative group">
-                      <div className="w-20 h-24 bg-gray-900/90 rounded-lg border-2 border-green-400 shadow-lg flex flex-col items-center justify-between p-1.5 cursor-pointer hover:bg-gray-800 transition-all overflow-hidden">
+                      <div className="w-24 h-32 bg-gray-900/90 rounded-lg border-2 border-green-400 shadow-lg flex flex-col items-center justify-between p-1.5 cursor-pointer hover:bg-gray-800 transition-all overflow-hidden">
                         {/* Player Image */}
                         {assignedPlayers.get(position.id)!.imageUrl ? (
                           <img
                             src={assignedPlayers.get(position.id)!.imageUrl!}
                             alt={assignedPlayers.get(position.id)!.name}
-                            className="w-14 h-14 rounded-full object-cover border-2 border-green-400"
+                            className="w-14 h-14 rounded-full object-cover border-2 border-green-400 flex-shrink-0"
                           />
                         ) : (
-                          <div className="w-14 h-14 rounded-full bg-gray-700 flex items-center justify-center border-2 border-green-400">
+                          <div className="w-14 h-14 rounded-full bg-gray-700 flex items-center justify-center border-2 border-green-400 flex-shrink-0">
                             <span className="text-base font-bold text-white">
                               {assignedPlayers.get(position.id)!.name.charAt(0)}
                             </span>
                           </div>
                         )}
+                        {/* Player Name & Team */}
+                        <div className="w-full text-center flex-1 flex flex-col justify-center">
+                          <p className="text-[9px] text-white font-semibold leading-tight truncate px-0.5">
+                            {assignedPlayers.get(position.id)!.name}
+                          </p>
+                          <p className="text-[8px] text-gray-400 leading-tight truncate">
+                            ({assignedPlayers.get(position.id)!.team})
+                          </p>
+                        </div>
                         {/* Position label at bottom */}
                         <div className="w-full bg-green-400/20 rounded px-1.5 py-0.5">
                           <span className="text-[9px] text-green-400 font-bold block text-center">
@@ -397,7 +406,7 @@ export default function SquadBuilderTab({
                     </div>
                   ) : (
                     // Empty Slot
-                    <div className="w-20 h-24 bg-gray-900/60 rounded-lg border-2 border-dashed border-gray-500 shadow-lg flex flex-col items-center justify-center hover:border-green-400 hover:bg-gray-800/60 transition-all">
+                    <div className="w-24 h-32 bg-gray-900/60 rounded-lg border-2 border-dashed border-gray-500 shadow-lg flex flex-col items-center justify-center hover:border-green-400 hover:bg-gray-800/60 transition-all">
                       <span className="text-[10px] text-gray-400 font-semibold">
                         {position.label}
                       </span>
