@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { Eye, EyeOff, X } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Eye, EyeOff, X, TrendingUp } from 'lucide-react'
 
 interface Player {
   id: string
@@ -11,6 +11,13 @@ interface Player {
   imageUrl?: string | null
   currentPriceInWei?: string
   sharesOwnedInFullShares?: number
+}
+
+interface GameweekHistory {
+  week_number: number
+  points: number
+  start_date?: string
+  end_date?: string
 }
 
 interface PortfolioSummaryTabProps {
@@ -28,6 +35,28 @@ export default function PortfolioSummaryTab({
 }: PortfolioSummaryTabProps) {
   const [showBalance, setShowBalance] = useState(true)
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null)
+  const [playerHistory, setPlayerHistory] = useState<GameweekHistory[]>([])
+  const [loadingHistory, setLoadingHistory] = useState(false)
+
+  // Fetch player history when modal opens
+  useEffect(() => {
+    if (selectedPlayer) {
+      setLoadingHistory(true)
+      fetch(`/api/player-scores/history?player_id=${selectedPlayer.id}`)
+        .then(res => res.json())
+        .then(data => {
+          setPlayerHistory(data.history || [])
+          setLoadingHistory(false)
+        })
+        .catch(err => {
+          console.error('Failed to fetch player history:', err)
+          setPlayerHistory([])
+          setLoadingHistory(false)
+        })
+    } else {
+      setPlayerHistory([])
+    }
+  }, [selectedPlayer])
 
   // Format balance for display
   const formatBalance = (balance?: string) => {
@@ -222,23 +251,40 @@ export default function PortfolioSummaryTab({
                 </div>
               </div>
 
-              {/* Stats */}
+              {/* Gameweek History */}
               <div className="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
-                <p className="text-xs text-gray-400 mb-3 text-center">Stats</p>
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="text-center">
-                    <p className="text-xs text-gray-400 mb-1">Goals</p>
-                    <p className="text-lg font-bold text-white">-</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-xs text-gray-400 mb-1">Assists</p>
-                    <p className="text-lg font-bold text-white">-</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-xs text-gray-400 mb-1">Matches</p>
-                    <p className="text-lg font-bold text-white">-</p>
-                  </div>
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <TrendingUp className="w-4 h-4 text-green-400" />
+                  <p className="text-xs text-gray-400">Gameweek History</p>
                 </div>
+
+                {loadingHistory ? (
+                  <div className="text-center py-4">
+                    <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-green-500"></div>
+                  </div>
+                ) : playerHistory.length === 0 ? (
+                  <p className="text-sm text-gray-500 text-center py-4">No gameweek data yet</p>
+                ) : (
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {playerHistory.map((gw) => (
+                      <div
+                        key={gw.week_number}
+                        className={`flex flex-col items-center px-3 py-2 rounded-lg text-sm ${
+                          gw.points > 15
+                            ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+                            : gw.points > 10
+                            ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                            : gw.points > 5
+                            ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+                            : 'bg-red-500/20 text-red-400 border border-red-500/30'
+                        }`}
+                      >
+                        <span className="font-bold text-lg">{gw.points}</span>
+                        <span className="text-[10px] opacity-70">GW{gw.week_number}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
