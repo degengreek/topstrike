@@ -124,6 +124,62 @@ function calculateSquadPoints(squadSnapshot, scoreMap) {
 }
 
 /**
+ * Transition to next gameweek
+ */
+async function transitionToNextGameweek(currentGameweek) {
+  console.log('\n🔄 Transitioning to next gameweek...')
+
+  // Deactivate current gameweek
+  const { error: deactivateError } = await supabase
+    .from('gameweeks')
+    .update({ is_active: false })
+    .eq('id', currentGameweek.id)
+
+  if (deactivateError) {
+    console.error('❌ Error deactivating current gameweek:', deactivateError)
+    return false
+  }
+
+  console.log(`   ✅ Deactivated Gameweek #${currentGameweek.week_number}`)
+
+  // Calculate next gameweek dates (same weekly schedule: Fri 14:00 → Mon 22:00)
+  const currentStart = new Date(currentGameweek.start_date)
+  const nextStart = new Date(currentStart)
+  nextStart.setDate(nextStart.getDate() + 7) // +7 days
+
+  const currentEnd = new Date(currentGameweek.end_date)
+  const nextEnd = new Date(currentEnd)
+  nextEnd.setDate(nextEnd.getDate() + 7) // +7 days
+
+  const currentLock = new Date(currentGameweek.lock_deadline)
+  const nextLock = new Date(currentLock)
+  nextLock.setDate(nextLock.getDate() + 7) // +7 days
+
+  // Create next gameweek
+  const nextWeekNumber = currentGameweek.week_number + 1
+  const { error: createError } = await supabase
+    .from('gameweeks')
+    .insert({
+      week_number: nextWeekNumber,
+      start_date: nextStart.toISOString(),
+      end_date: nextEnd.toISOString(),
+      lock_deadline: nextLock.toISOString(),
+      is_active: true
+    })
+
+  if (createError) {
+    console.error('❌ Error creating next gameweek:', createError)
+    return false
+  }
+
+  console.log(`   ✅ Created Gameweek #${nextWeekNumber}`)
+  console.log(`   📅 Dates: ${nextStart.toISOString()} → ${nextEnd.toISOString()}`)
+  console.log(`   🔒 Lock: ${nextLock.toISOString()}`)
+
+  return true
+}
+
+/**
  * Main calculation function
  */
 async function calculateGameweekPoints() {
@@ -212,7 +268,16 @@ async function calculateGameweekPoints() {
   console.log(`   Average Points: ${avgPoints}`)
   console.log(`   Highest Score: ${maxPoints}`)
   console.log(`   Lowest Score: ${minPoints}`)
-  console.log('\n✨ Done! Leaderboard updated.\n')
+
+  // Transition to next gameweek
+  const transitionSuccess = await transitionToNextGameweek(gameweek)
+
+  if (transitionSuccess) {
+    console.log('\n✨ Done! Leaderboard updated and transitioned to next gameweek.\n')
+  } else {
+    console.log('\n⚠️  Points calculated but gameweek transition failed.')
+    console.log('   Please create the next gameweek manually.\n')
+  }
 }
 
 // Run the script

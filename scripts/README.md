@@ -110,12 +110,14 @@ Run this multiple times during the gameweek to get latest player scores.
 node scripts/calculate-gameweek-points.js
 ```
 Calculates final points for all users based on their locked squads.
+**Automatically transitions to next gameweek** (deactivates current, creates next week).
 
 ### Important Notes
 
 - **ALWAYS lock squads first** (Friday 14:00) before matches start
 - Calculate points uses the **locked snapshot** from lock time, not current squads
 - This prevents cheating - users can't change squads after seeing scores
+- **Automatic gameweek transition**: Calculate points script auto-creates the next gameweek
 
 ### Manual Gameweek Number
 
