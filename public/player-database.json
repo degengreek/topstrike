@@ -1514,5 +1514,95 @@
     "sportsDbId": "34170315",
     "lastAttempt": "2026-03-09T14:50:01.040Z",
     "attempts": 1
+  },
+  {
+    "id": 177,
+    "name": "Bukayo Saka",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/xfwok41769331816.png",
+    "position": "Right Winger",
+    "team": "Arsenal",
+    "sportsDbId": "34169884",
+    "lastAttempt": "2026-03-11T14:37:12.733Z",
+    "attempts": 1
+  },
+  {
+    "id": 178,
+    "name": "Martin Terrier",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/lq0aiq1756316748.png",
+    "position": "Left Wing",
+    "team": "Bayer Leverkusen",
+    "sportsDbId": "34173332",
+    "lastAttempt": "2026-03-11T14:37:28.756Z",
+    "attempts": 1
+  },
+  {
+    "id": 179,
+    "name": "Declan Rice",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/do2pew1694204464.png",
+    "position": "Defensive Midfield",
+    "team": "Arsenal",
+    "sportsDbId": "34161584",
+    "lastAttempt": "2026-03-11T14:37:44.823Z",
+    "attempts": 1
+  },
+  {
+    "id": 180,
+    "name": "Ibrahim Maza",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/pp1m6o1756315346.png",
+    "position": "Attacker",
+    "team": "Bayer Leverkusen",
+    "sportsDbId": "34219244",
+    "lastAttempt": "2026-03-11T14:38:00.865Z",
+    "attempts": 1
+  },
+  {
+    "id": 181,
+    "name": "Omar Marmoush",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/kgn5451757098568.png",
+    "position": "Left Wing",
+    "team": "Manchester City",
+    "sportsDbId": "34177531",
+    "lastAttempt": "2026-03-11T14:38:16.870Z",
+    "attempts": 1
+  },
+  {
+    "id": 182,
+    "name": "Malo Gusto",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/wzyklc1757003476.png",
+    "position": "Right-Back",
+    "team": "Chelsea",
+    "sportsDbId": "34176466",
+    "lastAttempt": "2026-03-11T14:38:32.880Z",
+    "attempts": 1
+  },
+  {
+    "id": 183,
+    "name": "Joao Pedro",
+    "imageUrl": "/player-images/joaopedro.png",
+    "position": "Forward",
+    "team": "Chelsea",
+    "sportsDbId": null,
+    "lastAttempt": "2026-03-11T14:38:48.861Z",
+    "attempts": 1
+  },
+  {
+    "id": 184,
+    "name": "Matheus Nunes",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/qsv6us1757098631.png",
+    "position": "Central Midfield",
+    "team": "Manchester City",
+    "sportsDbId": "34191413",
+    "lastAttempt": "2026-03-11T14:39:04.873Z",
+    "attempts": 1
+  },
+  {
+    "id": 185,
+    "name": "Christian Kofane",
+    "imageUrl": "https://r2.thesportsdb.com/images/media/player/cutout/2eqfyx1756316089.png",
+    "position": "Forward",
+    "team": "Bayer Leverkusen",
+    "sportsDbId": "34303894",
+    "lastAttempt": "2026-03-11T14:39:20.891Z",
+    "attempts": 1
   }
 ]

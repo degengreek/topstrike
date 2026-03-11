@@ -180,6 +180,12 @@
       "team": "Liverpool",
       "verified": true,
       "notes": "Young forward, not in TheSportsDB"
+    },
+    "Joao Pedro": {
+      "position": "Forward",
+      "team": "Chelsea",
+      "verified": true,
+      "notes": "TheSportsDB returned wrong player (Defender from Penafiel)"
     }
   }
 }
