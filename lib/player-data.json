@@ -186,6 +186,12 @@
       "team": "Chelsea",
       "verified": true,
       "notes": "TheSportsDB returned wrong player (Defender from Penafiel)"
+    },
+    "Luis Henrique": {
+      "position": "Midfielder",
+      "team": "Inter",
+      "verified": true,
+      "notes": "TheSportsDB returned wrong player (Forward from Feirense)"
     }
   }
 }

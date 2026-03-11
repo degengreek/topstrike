@@ -1214,10 +1214,10 @@
   {
     "id": 146,
     "name": "Luis Henrique",
-    "imageUrl": "https://r2.thesportsdb.com/images/media/player/thumb/nazanp1527521197.jpg",
-    "position": "Forward",
-    "team": "Feirense",
-    "sportsDbId": "34163271"
+    "imageUrl": "/player-images/luishenrique.png",
+    "position": "Midfielder",
+    "team": "Inter",
+    "sportsDbId": null
   },
   {
     "id": 147,
