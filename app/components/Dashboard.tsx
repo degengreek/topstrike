@@ -767,34 +767,29 @@ export default function Dashboard() {
             <div className="flex gap-2">
               <input
                 type="text"
-                placeholder="Enter wallet address (0x...)"
+                placeholder="Search temporarily disabled"
                 value={walletAddress}
                 onChange={(e) => setWalletAddress(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                className="flex-1 px-4 py-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-blue-500"
-                disabled={session && linkedWallet ? true : false}
+                className="flex-1 px-4 py-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:outline-none focus:border-blue-500 opacity-50 cursor-not-allowed"
+                disabled={true}
               />
               <button
                 onClick={handleSearch}
-                disabled={loading || (session && linkedWallet ? true : false)}
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white rounded-lg font-semibold flex items-center gap-2 transition-colors"
+                disabled={true}
+                className="px-6 py-3 bg-gray-600 text-white rounded-lg font-semibold flex items-center gap-2 transition-colors opacity-50 cursor-not-allowed"
               >
-                {loading ? (
-                  <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                    Loading...
-                  </>
-                ) : (
-                  <>
-                    <Search className="w-5 h-5" />
-                    Search
-                  </>
-                )}
+                <Search className="w-5 h-5" />
+                Search
               </button>
             </div>
 
+            <div className="mt-3 text-center text-sm text-yellow-400">
+              ⚠️ Search is temporarily disabled
+            </div>
+
             {session && linkedWallet && (
-              <div className="mt-3 text-center text-sm text-gray-400">
+              <div className="mt-2 text-center text-sm text-gray-400">
                 Using linked wallet: <span className="text-blue-400 font-mono">{linkedWallet.slice(0, 6)}...{linkedWallet.slice(-4)}</span>
               </div>
             )}
