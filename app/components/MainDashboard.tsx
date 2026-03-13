@@ -17,6 +17,7 @@ import SquadBuilderTab from './SquadBuilderTab'
 import PortfolioSummaryTab from './PortfolioSummaryTab'
 import FixturesTab from './FixturesTab'
 import LeaderboardTab from './LeaderboardTab'
+import InjuriesTab from './InjuriesTab'
 import WalletLinkModal from './WalletLinkModal'
 import ViewWalletModal from './ViewWalletModal'
 
@@ -38,7 +39,7 @@ function getPlaceholderImage(name: string): string {
 
 export default function MainDashboard() {
   const { data: session } = useSession()
-  const [activeTab, setActiveTab] = useState<'squad' | 'portfolio' | 'fixtures' | 'leaderboard'>('squad')
+  const [activeTab, setActiveTab] = useState<'squad' | 'portfolio' | 'injuries' | 'fixtures' | 'leaderboard'>('squad')
 
   // User's linked wallet (permanent)
   const [linkedWallet, setLinkedWallet] = useState('')
@@ -405,6 +406,10 @@ export default function MainDashboard() {
                 walletBalance={walletBalance}
                 portfolioValue={portfolioValue}
               />
+            )}
+
+            {activeTab === 'injuries' && (
+              <InjuriesTab />
             )}
 
             {activeTab === 'fixtures' && (

@@ -11,7 +11,8 @@
     "build-db-upgraded": "tsx scripts/build-player-database-upgraded.ts",
     "build-db-quick": "tsx scripts/build-player-database-upgraded.ts",
     "add-new": "tsx scripts/add-new-players.ts",
-    "show-missing": "tsx scripts/show-missing-players.ts"
+    "show-missing": "tsx scripts/show-missing-players.ts",
+    "sync-injuries": "tsx scripts/sync-injuries.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.98.0",
