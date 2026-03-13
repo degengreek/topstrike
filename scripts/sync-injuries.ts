@@ -15,6 +15,7 @@
 
 import { createClient } from '@supabase/supabase-js'
 import { INJURY_DATA, LAST_UPDATED } from '../lib/injury-data'
+import { getVerifiedPlayerData } from '../lib/verified-players'
 import * as fs from 'fs'
 import * as path from 'path'
 
@@ -148,18 +149,22 @@ async function main() {
     if (player) {
       const injuryStatus = isSuspension(injury.injury) ? 'suspended' : 'injured'
 
+      // Check verified players first (manual overrides take priority)
+      const verified = getVerifiedPlayerData(player.name)
+
       matchedInjuries.push({
         player_id: player.id.toString(),
         player_name: player.name,
-        team: player.team || injury.team,
-        position: player.position || injury.position,
+        team: verified?.team || player.team || injury.team,
+        position: verified?.position || player.position || injury.position,
         injury_status: injuryStatus,
         injury_type: injury.injury,
         expected_return: injury.return_date
       })
 
       const statusEmoji = injuryStatus === 'suspended' ? '⛔' : '🤕'
-      console.log(`  ✅ ${statusEmoji} ${injury.player} → ID ${player.id} (${player.name})`)
+      const teamSource = verified ? '(verified)' : ''
+      console.log(`  ✅ ${statusEmoji} ${injury.player} → ID ${player.id} ${teamSource}`)
     } else {
       unmatchedInjuries.push(injury)
     }
